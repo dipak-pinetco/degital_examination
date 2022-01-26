@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAcademicYearsTable extends Migration
+class CreateStudentClassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateAcademicYearsTable extends Migration
      */
     public function up()
     {
-        Schema::create('academic_years', function (Blueprint $table) {
+        Schema::create('student_classes', function (Blueprint $table) {
             $table->increments('id');
-			$table->integer('school_id')->unsigned();
-			$table->string('academic_year', 50);
+			$table->integer('student_id')->unsigned();
+			$table->integer('class_division_id')->unsigned();
 			$table->timestamps();
 			$table->softDeletes();
         });
@@ -29,6 +29,6 @@ class CreateAcademicYearsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('academic_years');
+        Schema::dropIfExists('student_classes');
     }
 }
