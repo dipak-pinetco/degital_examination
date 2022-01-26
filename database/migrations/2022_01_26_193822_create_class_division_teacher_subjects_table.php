@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClassDivisionTeachersSubjectsTable extends Migration
+class CreateClassDivisionTeacherSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateClassDivisionTeachersSubjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('class_division_teachers_subjects', function (Blueprint $table) {
+        Schema::create('class_division_teacher_subjects', function (Blueprint $table) {
             $table->increments('id');
 			$table->integer('class_division_id')->unsigned();
 			$table->integer('class_teacher_subject_id')->unsigned();
