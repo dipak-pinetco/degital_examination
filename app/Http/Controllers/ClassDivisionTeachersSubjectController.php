@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClassDivisionTeachersSubject;
-use App\Http\Requests\StoreClassDivisionTeachersSubjectRequest;
-use App\Http\Requests\UpdateClassDivisionTeachersSubjectRequest;
+use App\Models\ClassDivisionTeacherSubject;
+use App\Http\Requests\StoreClassDivisionTeacherSubjectRequest;
+use App\Http\Requests\UpdateClassDivisionTeacherSubjectRequest;
 
-class ClassDivisionTeachersSubjectController extends Controller
+class ClassDivisionTeacherSubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class ClassDivisionTeachersSubjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreClassDivisionTeachersSubjectRequest  $request
+     * @param  \App\Http\Requests\StoreClassDivisionTeacherSubjectRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreClassDivisionTeachersSubjectRequest $request)
+    public function store(StoreClassDivisionTeacherSubjectRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class ClassDivisionTeachersSubjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ClassDivisionTeachersSubject  $classDivisionTeachersSubject
+     * @param  \App\Models\ClassDivisionTeacherSubject  $classDivisionTeacherSubject
      * @return \Illuminate\Http\Response
      */
-    public function show(ClassDivisionTeachersSubject $classDivisionTeachersSubject)
+    public function show(ClassDivisionTeacherSubject $classDivisionTeacherSubject)
     {
         //
     }
@@ -53,10 +53,10 @@ class ClassDivisionTeachersSubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ClassDivisionTeachersSubject  $classDivisionTeachersSubject
+     * @param  \App\Models\ClassDivisionTeacherSubject  $classDivisionTeacherSubject
      * @return \Illuminate\Http\Response
      */
-    public function edit(ClassDivisionTeachersSubject $classDivisionTeachersSubject)
+    public function edit(ClassDivisionTeacherSubject $classDivisionTeacherSubject)
     {
         //
     }
@@ -64,11 +64,11 @@ class ClassDivisionTeachersSubjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateClassDivisionTeachersSubjectRequest  $request
-     * @param  \App\Models\ClassDivisionTeachersSubject  $classDivisionTeachersSubject
+     * @param  \App\Http\Requests\UpdateClassDivisionTeacherSubjectRequest  $request
+     * @param  \App\Models\ClassDivisionTeacherSubject  $classDivisionTeacherSubject
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateClassDivisionTeachersSubjectRequest $request, ClassDivisionTeachersSubject $classDivisionTeachersSubject)
+    public function update(UpdateClassDivisionTeacherSubjectRequest $request, ClassDivisionTeacherSubject $classDivisionTeacherSubject)
     {
         //
     }
@@ -76,10 +76,10 @@ class ClassDivisionTeachersSubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ClassDivisionTeachersSubject  $classDivisionTeachersSubject
+     * @param  \App\Models\ClassDivisionTeacherSubject  $classDivisionTeacherSubject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ClassDivisionTeachersSubject $classDivisionTeachersSubject)
+    public function destroy(ClassDivisionTeacherSubject $classDivisionTeacherSubject)
     {
         //
     }
