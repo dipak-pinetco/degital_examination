@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\AcademicYear;
+use App\Models\School;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +22,14 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('test');
 });
+Route::get('/query', function () {
+    DB::enableQueryLog();
+    $data = School::with('academic_year')->get();
+    dd($data, DB::getQueryLog());
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
