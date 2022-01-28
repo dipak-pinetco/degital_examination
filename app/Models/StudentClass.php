@@ -4,18 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StudentClass extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function student()
+    /**
+     * Get the student that owns the StudentClass
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
-    public function class_division()
+    /**
+     * Get the class_division that owns the StudentClass
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function class_division(): BelongsTo
     {
         return $this->belongsTo(ClassDivision::class);
     }

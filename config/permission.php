@@ -2,7 +2,7 @@
 
 return [
 
-    'roles' => ['admin', 'teacher', 'student'],
+    'roles' => ['super-admin', 'admin', 'teacher', 'student'],
 
     'models' => [
 

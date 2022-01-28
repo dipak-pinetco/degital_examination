@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('school_id')->unsigned()->nullable();
             $table->string('first_name', 25);
             $table->string('last_name', 25);
             $table->enum('gender', array('male', 'female', 'other'));
@@ -25,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('mobile', 20);
             $table->integer('userable_id');
             $table->string('userable_type', 150);
+            $table->enum('status', [1, 0, 2])->comment("1 = Active, 0 = Block, 2 = Draft");
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -30,19 +30,34 @@ class DatabaseSeeder extends Seeder
         Subject::factory(rand(10, 15))->create();
         School::factory(5)->create()->each(function ($school) use ($roles) {
 
-            AcademicYear::factory(rand(5,7))->create(['school_id' => $school->id]);
-            Clases::factory(10)->create(['school_id' => $school->id]);
-            ExaminationGroup::factory(4)->create(['school_id' => $school->id]);
+            AcademicYear::factory(rand(5, 7))->create([
+                'school_id' => $school->id
+            ]);
 
+            Clases::factory(10)->create([
+                'school_id' => $school->id
+            ]);
 
-            User::factory(5)->create()->each(function ($user) use ($roles) {
-                $user->assignRole($roles[0]);
-            });
-            User::factory(10)->create()->each(function ($user) use ($roles) {
+            ExaminationGroup::factory(4)->create([
+                'school_id' => $school->id
+            ]);
+
+            User::factory(30)->create([
+                'school_id' => $school->id
+            ])->each(function ($user) use ($roles) {
                 $user->assignRole($roles[1]);
             });
-            User::factory(100)->create()->each(function ($user) use ($roles) {
+
+            User::factory(50)->create([
+                'school_id' => $school->id
+            ])->each(function ($user) use ($roles) {
                 $user->assignRole($roles[2]);
+            });
+
+            User::factory(100)->create([
+                'school_id' => $school->id
+            ])->each(function ($user) use ($roles) {
+                $user->assignRole($roles[3]);
             });
         });
     }

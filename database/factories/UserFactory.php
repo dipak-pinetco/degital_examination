@@ -27,6 +27,7 @@ class UserFactory extends Factory
             'userable_id' => 1,
             'userable_type' => 1,
             'remember_token' => Str::random(10),
+            'status' => 1,
         ];
     }
 

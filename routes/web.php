@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Models\AcademicYear;
 use App\Models\School;
@@ -32,7 +33,7 @@ Route::get('/query', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Route::resource('/class',[classContro])
+    Route::resource('/admin', AdminController::class);
 });
 
 
