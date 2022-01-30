@@ -11,6 +11,11 @@ class Teacher extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /**
+     * Get the user that owns the Teacher
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
