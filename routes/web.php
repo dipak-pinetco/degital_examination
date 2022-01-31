@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Livewire\Admin\CreateUpdateAdmin;
+use App\Http\Livewire\Admin\ListAdmin;
 use App\Models\AcademicYear;
 use App\Models\School;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +35,11 @@ Route::get('/query', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('/admin', AdminController::class);
+    Route::resource('/admin', AdminController::class)->except(['index', 'create', 'store', 'edit', 'update']);
+    Route::get('/admin', ListAdmin::class, 'render')->name('admin.index');
+
+    Route::get('/admin/create', [CreateUpdateAdmin::class, 'render'])->name('admin.create');
+    Route::get('/admin/{id}', [CreateUpdateAdmin::class, 'render'])->name('admin.edit');
 });
 
 
