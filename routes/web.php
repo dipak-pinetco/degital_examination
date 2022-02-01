@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Admin\CreateAdmin;
 use App\Http\Livewire\Admin\ListAdmin;
@@ -8,9 +7,6 @@ use App\Http\Livewire\Admin\UpdateAdmin;
 use App\Http\Livewire\Classes\CreateClass;
 use App\Http\Livewire\Classes\ListClass;
 use App\Http\Livewire\Classes\UpdateClass;
-use App\Models\School;
-use Illuminate\Routing\RouteGroup;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,14 +23,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/test', function () {
-    return view('test');
-});
-Route::get('/query', function () {
-    DB::enableQueryLog();
-    $data = School::with('academic_year')->get();
-    dd($data, DB::getQueryLog());
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -46,6 +34,11 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('/classes')->group(function () {
+        Route::prefix('/{school_id}/division')->group(function () {
+            Route::get('/{id}', UpdateAdmin::class)->name('classes.division.edit');
+            Route::get('/create', CreateAdmin::class)->name('classes.division.create');
+            Route::get('/', ListAdmin::class, 'render')->name('classes.division.index');
+        });
         Route::get('/{id}', UpdateClass::class)->name('classes.edit');
         Route::get('/create', CreateClass::class)->name('classes.create');
         Route::get('/', ListClass::class, 'render')->name('classes.index');
