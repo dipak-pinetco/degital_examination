@@ -111,6 +111,12 @@
                     <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-tachometer fa-2x" aria-hidden="true"></i>
                     {{ __('Admin') }}
                 </a>
+                <a href="{{ route('classes.index') }}"
+                    class="{{ Route::is('classes*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <!-- Heroicon name: outline/home -->
+                    <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-tachometer fa-2x" aria-hidden="true"></i>
+                    {{ __('Classes') }}
+                </a>
 
 
                 <form method="POST" action="{{ route('logout') }}">

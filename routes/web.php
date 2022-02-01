@@ -5,7 +5,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Admin\CreateAdmin;
 use App\Http\Livewire\Admin\ListAdmin;
 use App\Http\Livewire\Admin\UpdateAdmin;
+use App\Http\Livewire\Classes\CreateClass;
+use App\Http\Livewire\Classes\ListClass;
+use App\Http\Livewire\Classes\UpdateClass;
 use App\Models\School;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -35,11 +39,17 @@ Route::get('/query', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/admin/edit/{id}', UpdateAdmin::class)->name('admin.edit');
-    Route::get('/admin/create', CreateAdmin::class)->name('admin.create');
-    Route::get('/admin', ListAdmin::class, 'render')->name('admin.index');
-    Route::resource('/admin', AdminController::class)->except(['index', 'create', 'store', 'edit', 'update']);
-    // Route::resource('/admin', AdminController::class);
+    Route::prefix('/admin')->group(function () {
+        Route::get('/{id}', UpdateAdmin::class)->name('admin.edit');
+        Route::get('/create', CreateAdmin::class)->name('admin.create');
+        Route::get('/', ListAdmin::class, 'render')->name('admin.index');
+    });
+
+    Route::prefix('/classes')->group(function () {
+        Route::get('/{id}', UpdateClass::class)->name('classes.edit');
+        Route::get('/create', CreateClass::class)->name('classes.create');
+        Route::get('/', ListClass::class, 'render')->name('classes.index');
+    });
 });
 
 

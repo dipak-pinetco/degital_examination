@@ -1,6 +1,6 @@
 <div>
     <x-slot name="header">
-        <h1 class="text-2xl font-semibold text-gray-900">{{ __('Admin') }}</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">{{ __('Classes') }}</h1>
     </x-slot>
 
     <div class="py-4">
@@ -37,7 +37,7 @@
             <div class="flex border-2 border-gray-200 rounded">
                 <input wire:model="search" type="text" class="px-4 py-2 w-80" placeholder="Search...">
 
-                <a href="{{ route('admin.create') }}"
+                <a href="{{ route('classes.create') }}"
                     class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
                     Create
                 </a>
@@ -56,57 +56,29 @@
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Status
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Role
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Action
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach ($users as $user)
+                                @foreach ($classes as $class)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0 h-10 w-10">
-                                                    <img class="h-10 w-10 rounded-full"
-                                                        src="{{ $user->avatar_path }}" alt="">
-                                                </div>
-                                                <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">
-                                                        {{ $user->full_name }}
-                                                    </div>
-                                                    <div class="text-sm text-gray-500">
-                                                        {{ $user->email }} , {{ $user->mobile }}
-                                                    </div>
-                                                </div>
+                                            <div class="text-sm font-medium text-gray-900">
+                                                {{ $class->name }}
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ in_array($user->status, array_keys(config('constant.status_color')))? 'bg-' .config('constant.status_color')[$user->status] .'-100 text-' .config('constant.status_color')[$user->status] .'-800': '' }}  ">
-                                                {{ $user->status_text }}
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ Str::ucfirst($user->roles[0]->name) }}
-                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{ route('admin.edit', $user->id) }}"
+                                            <a href="{{ route('classes.edit', $class->id) }}"
                                                 class="bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-600 rounded">Edit</a>
-                                            <a href="javascript:void(0)" Wire:click="adminDelete({{ $user->id }})"
+                                            <a href="javascript:void(0)" Wire:click="adminDelete({{ $class->id }})"
                                                 class="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-600 rounded">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $users->links() }}
+                        {{ $classes->links() }}
                     </div>
                 </div>
             </div>

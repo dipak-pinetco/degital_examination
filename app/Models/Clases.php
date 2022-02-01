@@ -11,6 +11,27 @@ class Clases extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const PAGINATION_COUNT = 10;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'school_id',
+        'name',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+
+    ];
+
     /**
      * Get the school that owns the Clases
      *
