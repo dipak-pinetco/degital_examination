@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -59,7 +60,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'date_of_birth' => 'date',
+        'date_of_birth' => 'date:Y-m-d',
         'email_verified_at' => 'datetime',
     ];
 
@@ -68,9 +69,9 @@ class User extends Authenticatable
         return $this->morphTo();
     }
 
-    public function getAvatarAttribute()
+    public function getAvatarPathAttribute()
     {
-        return 'https://www.gravatar.com/avatar/' . md5($this->email);
+        return is_null($this->avatar) ? 'https://www.gravatar.com/avatar/' . md5($this->email) . '?d=mp&f=y' : Storage::url($this->avatar);
     }
 
     public function getFullNameAttribute()

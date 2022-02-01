@@ -77,8 +77,7 @@
                                     class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
                                     <option value="">{{ __('Select gender') }}</option>
                                     @foreach ($genderType as $gender1)
-                                        <option value="{{ $gender1 }}"
-                                            {{ $gender }}>
+                                        <option value="{{ $gender1 }}" {{ $gender }}>
                                             {{ Str::ucfirst($gender1) }}</option>
                                     @endforeach
                                 </select>
@@ -92,26 +91,28 @@
                                 Date Of Birth
                             </label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                <input Wire:model='date_of_birth' type="date" name="date-of-birth" id="date-of-birth"
-                                    autocomplete="date-of-birth"
+                                <input wire:model='date_of_birth' type="date"
+                                    name="date-of-birth" id="date-of-birth" autocomplete="date-of-birth"
                                     class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
                                 @error('date_of_birth') <span class="error">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-
-                        <div
-                            class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                            <label for="password" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                Password
-                            </label>
-                            <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                <input wire:model='password' type="password" name="password" id="password"
-                                    autocomplete="address-level2"
-                                    class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                                @error('password') <span class="error">{{ $message }}</span> @enderror
+                        @if (is_null($password))
+                            <div
+                                class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                                <label for="password" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                    Password
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    <input wire:model='password' type="password" name="password" id="password"
+                                        autocomplete="address-level2"
+                                        class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+                                    @error('password') <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div
                             class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5">
                             <label for="photo" class="block text-sm font-medium text-gray-700">
@@ -131,7 +132,7 @@
                                             <label for="file-upload"
                                                 class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                                 <span>Upload a file</span>
-                                                <input wire:model='avatar' id="file-upload" name="file-upload"
+                                                <input wire:model.defer='avatar' id="file-upload" name="file-upload"
                                                     type="file" class="sr-only">
                                             </label>
                                             <p class="pl-1">or drag and drop</p>

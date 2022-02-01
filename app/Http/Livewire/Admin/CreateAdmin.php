@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -19,29 +20,35 @@ class CreateAdmin extends Component
     public function mount($admin = null)
     {
         if ($admin) {
+            $this->admin = $admin;
             $this->first_name = $admin->first_name;
             $this->last_name = $admin->last_name;
             $this->gender = $admin->gender;
-            $this->date_of_birth = $admin->date_of_birth;
+            $this->date_of_birth = $admin->date_of_birth->format('Y-m-d');
             $this->email = $admin->email;
             $this->password = $admin->password;
             $this->mobile = $admin->mobile;
-            $this->avatar = $admin->avatar;;
+
         }
     }
     protected function rules()
     {
-        return [
+        $validation = [
             'first_name' => 'required|min:3|max:25',
             'last_name' => 'required|min:3|max:25',
             'gender' => 'required|in:' . implode(',', User::getEnum('gender')),
             // 'gender' => ['required', new Enum(ServerStatus::class)],
             'date_of_birth' => 'required|date',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
             'mobile' => 'required',
-            'avatar' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048', // 2MB Max
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 2MB Max
         ];
+        if (is_null($this->admin)) {
+            $validation['password'] = 'required';
+            $validation['email'] = ['required', 'email', Rule::unique('users')];
+        } else {
+            $validation['email'] = ['required', 'email', Rule::unique('users')->ignore($this->admin->id)];
+        }
+        return $validation;
     }
 
     protected $validationAttributes = [
@@ -67,17 +74,27 @@ class CreateAdmin extends Component
 
     public function submit()
     {
+        \dd($this->avatar);
         $validatedData = $this->validate();
+        if ($this->avatar) {
+            $validatedData['avatar'] = $this->avatar->store('avatars');
+            dd($validatedData['avatar']);
+        }
 
-        $validatedData['status'] = $this->status;
-        $validatedData['school_id'] = auth()->user()->school_id;
-        $user = User::create($validatedData);
-        $roles = Config::get('permission.roles');
-        $user->assignRole($roles[1]);
+        if (is_null($this->admin)) {
+            $validatedData['status'] = $this->status;
+            $validatedData['school_id'] = auth()->user()->school_id;
+            $user = User::create($validatedData);
+            $roles = Config::get('permission.roles');
+            $user->assignRole($roles[1]);
+            session()->flash('message', __('Admin successfully created.'));
+        } else {
+            $this->admin->fill($validatedData)->save();
+            session()->flash('message', __('Admin successfully updated.'));
+        }
 
-        session()->flash('message', __('Admin successfully created.'));
         session()->flash('class', 'green');
-        $this->resetInputFields();
+        // $this->resetInputFields();
 
         return redirect()->route('admin.index');
     }

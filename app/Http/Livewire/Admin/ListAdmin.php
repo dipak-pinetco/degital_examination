@@ -24,7 +24,7 @@ class ListAdmin extends Component
             });
         })->when(!empty($this->search), function ($query) {
             $query->whereLike(['first_name'], $this->search);
-        })->paginate(User::PAGINATION_COUNT)->withPath('/admin')->withQueryString();
+        })->orderBy('id','DESC')->paginate(User::PAGINATION_COUNT)->withPath('/admin')->withQueryString();
         return view('livewire.admin.list-admin', ['users' => $users]);
     }
 
