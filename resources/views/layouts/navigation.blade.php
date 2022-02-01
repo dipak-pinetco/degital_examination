@@ -102,14 +102,14 @@
                     class="{{ Route::is('dashboard*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <!-- Heroicon name: outline/home -->
                     <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-tachometer fa-2x" aria-hidden="true"></i>
-                    Dashboard
+                    {{ __('Dashboard') }}
                 </a>
 
                 <a href="{{ route('admin.index') }}"
                     class="{{ Route::is('admin*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <!-- Heroicon name: outline/home -->
                     <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-tachometer fa-2x" aria-hidden="true"></i>
-                    Admin
+                    {{ __('Admin') }}
                 </a>
 
 

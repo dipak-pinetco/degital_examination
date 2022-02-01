@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Enums;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,9 +14,14 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Enums;
 
     const PAGINATION_COUNT = 10;
+    const GENDER_MALE = 'Male';
+    const GENDER_FEMALE = 'Female';
+    const GENDER_OTHER = 'Other';
+
+    protected $enumGenders = [User::GENDER_MALE, User::GENDER_FEMALE, User::GENDER_OTHER];
 
     /**
      * The attributes that are mass assignable.
@@ -23,9 +29,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'school_id',
+        'first_name',
+        'last_name',
+        'gender',
+        'date_of_birth',
         'email',
         'password',
+        'mobile',
+        'userable_id',
+        'userable_type',
+        'status',
+        'avatar',
     ];
 
     /**
@@ -44,6 +59,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'date_of_birth' => 'date',
         'email_verified_at' => 'datetime',
     ];
 

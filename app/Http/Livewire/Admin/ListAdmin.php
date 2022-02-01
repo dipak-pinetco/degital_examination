@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -27,5 +26,12 @@ class ListAdmin extends Component
             $query->whereLike(['first_name'], $this->search);
         })->paginate(User::PAGINATION_COUNT)->withPath('/admin')->withQueryString();
         return view('livewire.admin.list-admin', ['users' => $users]);
+    }
+
+    public function adminDelete(User $admin)
+    {
+        $admin->delete();
+        session()->flash('message', __('Admin successfully deleted.'));
+        session()->flash('class', 'green');
     }
 }
