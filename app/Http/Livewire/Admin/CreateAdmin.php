@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
@@ -28,7 +29,6 @@ class CreateAdmin extends Component
             $this->email = $admin->email;
             $this->password = $admin->password;
             $this->mobile = $admin->mobile;
-
         }
     }
     protected function rules()
@@ -74,14 +74,13 @@ class CreateAdmin extends Component
 
     public function submit()
     {
-        \dd($this->avatar);
         $validatedData = $this->validate();
         if ($this->avatar) {
             $validatedData['avatar'] = $this->avatar->store('avatars');
-            dd($validatedData['avatar']);
         }
 
         if (is_null($this->admin)) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
             $validatedData['status'] = $this->status;
             $validatedData['school_id'] = auth()->user()->school_id;
             $user = User::create($validatedData);
@@ -89,6 +88,9 @@ class CreateAdmin extends Component
             $user->assignRole($roles[1]);
             session()->flash('message', __('Admin successfully created.'));
         } else {
+            if (is_null($validatedData['avatar'])) {
+                unset($validatedData['avatar']);
+            }
             $this->admin->fill($validatedData)->save();
             session()->flash('message', __('Admin successfully updated.'));
         }

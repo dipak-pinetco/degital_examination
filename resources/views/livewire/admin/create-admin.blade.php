@@ -91,14 +91,14 @@
                                 Date Of Birth
                             </label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                <input wire:model='date_of_birth' type="date"
-                                    name="date-of-birth" id="date-of-birth" autocomplete="date-of-birth"
+                                <input wire:model='date_of_birth' type="date" name="date-of-birth" id="date-of-birth"
+                                    autocomplete="date-of-birth"
                                     class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
                                 @error('date_of_birth') <span class="error">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-                        @if (is_null($password))
+                        @if (!$admin)
                             <div
                                 class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label for="password" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
