@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Classes;
 
 use App\Models\Clases;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class UpdateClass extends Component

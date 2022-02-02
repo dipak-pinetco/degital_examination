@@ -11,6 +11,32 @@ class ClassDivision extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const CLASS_DIVISIONS_RENGE = 'A-I';
+
+    const PAGINATION_COUNT = 10;
+
+    public static function class_divisions_array()
+    {
+        return range('A', 'I');
+    }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'class_id',
+        'name',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [];
+
     /**
      * Get the class that owns the ClassDivision
      *

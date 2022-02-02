@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Classes;
 
 use App\Models\Clases;
+use App\Models\ClassDivision;
 use Livewire\Component;
 use Livewire\WithPagination;
 

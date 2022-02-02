@@ -24,8 +24,41 @@
                                 <input wire:model='name' type="text" name="class-name" id="class-name"
                                     autocomplete="given-name"
                                     class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                                @error('name') <span class="error text-red-700">{{ $message }}</span>
-                                @enderror
+                                @error('name') <span class="error text-red-700">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-6 sm:space-y-5 divide-y divide-gray-200">
+                <div class="pt-6 sm:pt-5">
+                    <div role="group" aria-labelledby="label-email">
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-baseline">
+                            <div>
+                                <div class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"
+                                    id="label-email">
+                                    Classes Division
+                                </div>
+                            </div>
+                            <div class="mt-4 sm:mt-0 sm:col-span-2">
+                                <div class="max-w-lg space-y-4">
+                                    @foreach ($classes_divisions as $classes_division_key => $classes_division)
+                                        <div class="relative flex items-start">
+                                            <div class="flex items-center h-5">
+                                                <input id="division{{ $classes_division_key }}"
+                                                    wire:model.defer='divisions.{{ $classes_division }}'
+                                                    value="{{ $classes_division }}" type="checkbox"
+                                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                            </div>
+                                            <div class="ml-3 text-sm">
+                                                <label for="division{{ $classes_division_key }}"
+                                                    class="font-medium text-gray-700">{{ $classes_division }}</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    @error('divisions') <span class="error text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>

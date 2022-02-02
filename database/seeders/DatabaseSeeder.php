@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\AcademicYear;
 use App\Models\Clases;
+use App\Models\ClassDivision;
 use App\Models\ExaminationGroup;
 use App\Models\School;
 use App\Models\Subject;
@@ -36,7 +37,11 @@ class DatabaseSeeder extends Seeder
 
             Clases::factory(10)->create([
                 'school_id' => $school->id
-            ]);
+            ])->each(function ($class) {
+                ClassDivision::factory(1)->create([
+                    'class_id' => $class->id
+                ]);
+            });
 
             ExaminationGroup::factory(4)->create([
                 'school_id' => $school->id

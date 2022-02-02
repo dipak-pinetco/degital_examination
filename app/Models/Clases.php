@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Relations\HasManySyncable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Clases extends Model
@@ -28,9 +30,28 @@ class Clases extends Model
      *
      * @var array<string, string>
      */
-    protected $casts = [
+    protected $casts = [];
 
-    ];
+    /**
+     * Overrides the default Eloquent hasMany relationship to return a HasManySyncable.
+     *
+     * {@inheritDoc}
+     */
+    public function hasMany($related, $foreignKey = null, $localKey = null)
+    {
+        $instance = $this->newRelatedInstance($related);
+
+        $foreignKey = $foreignKey ?: $this->getForeignKey();
+
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return new HasManySyncable(
+            $instance->newQuery(),
+            $this,
+            $instance->getTable() . '.' . $foreignKey,
+            $localKey
+        );
+    }
 
     /**
      * Get the school that owns the Clases
@@ -40,5 +61,15 @@ class Clases extends Model
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
+    }
+
+    /**
+     * Get all of the divisions for the Clases
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function divisions(): HasMany
+    {
+        return $this->hasMany(ClassDivision::class, 'class_id', 'id');
     }
 }

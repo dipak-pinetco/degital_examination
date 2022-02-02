@@ -28,18 +28,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('/admin')->group(function () {
-        Route::get('/{id}', UpdateAdmin::class)->name('admin.edit');
+        Route::get('/edit/{id}', UpdateAdmin::class)->name('admin.edit');
         Route::get('/create', CreateAdmin::class)->name('admin.create');
         Route::get('/', ListAdmin::class, 'render')->name('admin.index');
     });
 
     Route::prefix('/classes')->group(function () {
-        Route::prefix('/{school_id}/division')->group(function () {
-            Route::get('/{id}', UpdateAdmin::class)->name('classes.division.edit');
-            Route::get('/create', CreateAdmin::class)->name('classes.division.create');
-            Route::get('/', ListAdmin::class, 'render')->name('classes.division.index');
-        });
-        Route::get('/{id}', UpdateClass::class)->name('classes.edit');
+        // Route::prefix('/{school_id}/division')->group(function () {
+        //     Route::get('/edit/{id}', UpdateAdmin::class)->name('classes.division.edit');
+        //     Route::get('/create', CreateAdmin::class)->name('classes.division.create');
+        //     Route::get('/', ListAdmin::class, 'render')->name('classes.division.index');
+        // });
+        Route::get('/edit/{id}', UpdateClass::class)->name('classes.edit');
         Route::get('/create', CreateClass::class)->name('classes.create');
         Route::get('/', ListClass::class, 'render')->name('classes.index');
     });

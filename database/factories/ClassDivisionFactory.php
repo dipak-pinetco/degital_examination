@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ClassDivision;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClassDivisionFactory extends Factory
@@ -14,7 +15,7 @@ class ClassDivisionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->regexify('[' . ClassDivision::CLASS_DIVISIONS_RENGE . ']{1}'),
         ];
     }
 }
