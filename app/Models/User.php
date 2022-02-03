@@ -6,7 +6,9 @@ use App\Traits\Enums;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, Enums;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Enums, SoftDeletes;
 
     const PAGINATION_COUNT = 10;
     const GENDER_MALE = 'Male';
@@ -64,7 +66,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function userable(): MorphTo
+    public function user(): MorphTo
     {
         return $this->morphTo();
     }
@@ -102,5 +104,27 @@ class User extends Authenticatable
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
+    }
+
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     */
+    public function scopeRoleUser($query, array $roles)
+    {
+        $query->with(['roles'])
+            ->when(!auth()->user()->hasRole('super-admin'), function ($query) {
+                $query->whereHas('school', function ($query) {
+                    $query->where('id', auth()->user()->school_id);
+                });
+            });
+
+        foreach ($roles as $key => $role) {
+            $query->whereHas('roles', function ($q) use ($role) {
+                $q->where('name', $role);
+            });
+        }
     }
 }

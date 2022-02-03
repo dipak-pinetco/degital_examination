@@ -8,12 +8,15 @@ use App\Models\ClassDivision;
 use App\Models\ExaminationGroup;
 use App\Models\School;
 use App\Models\Subject;
+use App\Models\Teacher;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,10 +46,17 @@ class DatabaseSeeder extends Seeder
             });
 
             // Teacher
-            User::factory(50)->create([
+            Teacher::factory(50)->create([
                 'school_id' => $school->id
-            ])->each(function ($user) use ($roles) {
-                $user->assignRole($roles[2]);
+            ])->each(function ($teacher) use ($roles) {
+                $teacher->password = Hash::make('password');
+                $teacher->email_verified_at = now();
+                $teacher->remember_token = Str::random(10);
+
+                $teacherUser = clone $teacher->user();
+                $teacherUser->create(Arr::except($teacher->toArray(), ['id']))->save();
+
+                $teacher->user->assignRole($roles[2]);
             });
 
             // Class
@@ -59,17 +69,17 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
 
-            // ExaminationGroup
-            ExaminationGroup::factory(4)->create([
-                'school_id' => $school->id
-            ]);
+            // // ExaminationGroup
+            // ExaminationGroup::factory(4)->create([
+            //     'school_id' => $school->id
+            // ]);
 
-            // Student
-            User::factory(100)->create([
-                'school_id' => $school->id
-            ])->each(function ($user) use ($roles) {
-                $user->assignRole($roles[3]);
-            });
+            // // Student
+            // User::factory(100)->create([
+            //     'school_id' => $school->id
+            // ])->each(function ($user) use ($roles) {
+            //     $user->assignRole($roles[3]);
+            // });
         });
     }
 }

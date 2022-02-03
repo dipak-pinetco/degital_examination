@@ -7,6 +7,9 @@ use App\Http\Livewire\Admin\UpdateAdmin;
 use App\Http\Livewire\Classes\CreateClass;
 use App\Http\Livewire\Classes\ListClass;
 use App\Http\Livewire\Classes\UpdateClass;
+use App\Http\Livewire\Teacher\CreateTeacher;
+use App\Http\Livewire\Teacher\ListTeacher;
+use App\Http\Livewire\Teacher\UpdateTeacher;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +34,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit/{id}', UpdateAdmin::class)->name('admin.edit');
         Route::get('/create', CreateAdmin::class)->name('admin.create');
         Route::get('/', ListAdmin::class, 'render')->name('admin.index');
+    });
+
+    Route::prefix('/teacher')->group(function () {
+        Route::get('/edit/{id}', UpdateTeacher::class)->name('teacher.edit');
+        Route::get('/create', CreateTeacher::class)->name('teacher.create');
+        Route::get('/', ListTeacher::class, 'render')->name('teacher.index');
     });
 
     Route::prefix('/classes')->group(function () {

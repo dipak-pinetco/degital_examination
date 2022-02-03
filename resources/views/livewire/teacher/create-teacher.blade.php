@@ -1,6 +1,6 @@
 <div>
     <x-slot name="header">
-        <h1 class="text-2xl font-semibold text-gray-900">{{ __('Teacher') }}</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">{{ __('Admin') }}</h1>
     </x-slot>
 
     <div class="py-4">
@@ -23,7 +23,7 @@
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 <input wire:model='first_name' type="text" name="first-name" id="first-name"
                                     autocomplete="given-name"
-                                    class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
+                                    class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
                                 @error('first_name') <span class="error text-red-700">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -37,7 +37,7 @@
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 <input wire:model='last_name' type="text" name="last-name" id="last-name"
                                     autocomplete="family-name"
-                                    class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
+                                    class="block max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
                                 @error('last_name') <span class="error">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -62,6 +62,17 @@
                                 <input wire:model='mobile' id="mobile" name="mobile" type="tel" autocomplete="mobile"
                                     class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
                                 @error('mobile') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div
+                            class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                            <label for="degree" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                Degree
+                            </label>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                <input wire:model='degree' id="degree" name="degree" type="text" autocomplete="degree"
+                                    class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
+                                @error('degree') <span class="error">{{ $message }}</span> @enderror
                             </div>
                         </div>
 
@@ -96,7 +107,7 @@
                                 @enderror
                             </div>
                         </div>
-                        @if (!$admin)
+                        @if (!$teacher)
                             <div
                                 class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                                 <label for="password" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">

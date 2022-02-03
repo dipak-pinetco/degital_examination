@@ -16,15 +16,10 @@ class ListAdmin extends Component
 
     public function render()
     {
-        $users = User::with(['roles'])->whereHas('roles', function ($query) {
-            $query->where('name', 'admin');
-        })->when(!auth()->user()->hasRole('super-admin'), function ($query) {
-            $query->whereHas('school', function ($query) {
-                $query->where('id', auth()->user()->school_id);
-            });
-        })->when(!empty($this->search), function ($query) {
-            $query->whereLike(['first_name'], $this->search);
-        })->orderBy('id','DESC')->paginate(User::PAGINATION_COUNT)->withPath('/admin')->withQueryString();
+        $users = User::RoleUser(['admin'])
+            ->when(!empty($this->search), function ($query) {
+                $query->whereLike(['first_name'], $this->search);
+            })->orderBy('id', 'DESC')->paginate(User::PAGINATION_COUNT)->withPath('/admin')->withQueryString();
         return view('livewire.admin.list-admin', ['users' => $users]);
     }
 

@@ -39,7 +39,7 @@ class CreateForeignKeys extends Migration
                 ->onUpdate('no action');
         });
         Schema::table('teachers', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->foreign('school_id')->references('id')->on('schools')
                 ->onDelete('cascade')
                 ->onUpdate('no action');
         });
@@ -188,7 +188,7 @@ class CreateForeignKeys extends Migration
             $table->dropForeign('class_divisions_class_id_foreign');
         });
         Schema::table('teachers', function (Blueprint $table) {
-            $table->dropForeign('teachers_user_id_foreign');
+            $table->dropForeign('teachers_school_id_foreign');
         });
         Schema::table('teacher_subjects', function (Blueprint $table) {
             $table->dropForeign('teacher_subjects_teacher_id_foreign');
