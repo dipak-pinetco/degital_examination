@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Relations\HasManySyncable;
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,9 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Clases extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, SoftCascadeTrait;
 
     const PAGINATION_COUNT = 10;
+
+    protected $softCascade = ['divisions'];
 
     /**
      * The attributes that are mass assignable.

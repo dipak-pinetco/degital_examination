@@ -64,15 +64,21 @@ class CreateClass extends Component
         $validatedData['school_id'] = auth()->user()->school_id;
 
         if (is_null($this->class)) {
-            $class = Clases::create($validatedData);
+            $this->class = Clases::create($validatedData);
             session()->flash('message', __('Classes successfully created.'));
         } else {
             $this->class->fill($validatedData)->save();
             session()->flash('message', __('Classes successfully updated.'));
         }
 
-        $available_divisions = collect($this->class->divisions()->select('id', 'class_id', 'name')->whereIn('name', array_values($this->divisions))->get());
+        $available_divisions = collect(
+            $this->class->divisions()
+                ->select('id', 'class_id', 'name')
+                ->whereIn('name', array_values($this->divisions))->get()
+        );
+
         $updatedDivisions = [];
+
         foreach (array_values($this->divisions) as $key => $value) {
             if ($available_divisions->where('name', $value)->isEmpty()) {
                 $updatedDivisions[] = ['name' => $value];
