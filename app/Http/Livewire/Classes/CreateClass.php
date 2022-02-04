@@ -52,11 +52,6 @@ class CreateClass extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function resetInputFields()
-    {
-        $this->name = '';
-    }
-
     public function submit()
     {
         $this->divisions = Arr::sort(array_filter($this->divisions));
@@ -88,7 +83,6 @@ class CreateClass extends Component
         $this->class->divisions()->sync($updatedDivisions);
 
         session()->flash('class', 'green');
-        // $this->resetInputFields();
 
         return redirect()->route('classes.index');
     }

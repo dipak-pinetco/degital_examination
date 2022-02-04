@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Teacher;
 
 use App\Models\Teacher;
 use Arr;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -39,7 +40,7 @@ class CreateTeacher extends Component
             'last_name' => 'required|min:3|max:25',
             'gender' => 'required|in:' . implode(',', Teacher::getEnum('gender')),
             // 'gender' => ['required', new Enum(ServerStatus::class)],
-            'date_of_birth' => 'required|date',
+            'date_of_birth' => ['required', 'date', 'before:' . Carbon::now()->subYears(5)],
             'mobile' => 'required',
             'degree' => 'required',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 2MB Max
@@ -60,19 +61,6 @@ class CreateTeacher extends Component
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
-    }
-
-    public function resetInputFields()
-    {
-        $this->first_name = '';
-        $this->last_name = '';
-        $this->gender = 'male';
-        $this->date_of_birth = '';
-        $this->email = '';
-        $this->password = '';
-        $this->mobile = '';
-        $this->degree = '';
-        $this->avatar = null;
     }
 
     public function submit()
@@ -106,7 +94,6 @@ class CreateTeacher extends Component
         }
 
         session()->flash('class', 'green');
-        // $this->resetInputFields();
 
         return redirect()->route('teacher.index');
     }
