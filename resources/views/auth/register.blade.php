@@ -12,11 +12,36 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <!-- Name -->
+            <!-- School -->
             <div>
-                <x-label for="name" :value="__('Name')" />
+                <x-label for="school" :value="__('School')" />
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <x-form-select id="school" :value="old('school_id')" name="school_id" :options="$schools"
+                    placeholder="Select school" />
+            </div>
+
+            <!-- Role -->
+            <div class="mt-4">
+                <x-label for="roles" :value="__('Roles')" />
+
+                <x-form-select id="roles" :value="old('role')" name="role" :options="$roles"
+                    placeholder="Select roles" />
+            </div>
+
+            <!-- First Name -->
+            <div class="mt-4">
+                <x-label for="first_name" :value="__('First Name')" />
+
+                <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name"
+                    :value="old('first_name')" required autofocus />
+            </div>
+
+            <!-- Last Name -->
+            <div class="mt-4">
+                <x-label for="last_name" :value="__('Last Name')" />
+
+                <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')"
+                    required autofocus />
             </div>
 
             <!-- Email Address -->
@@ -26,23 +51,44 @@
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
+            <!-- Mobile Number -->
+            <div class="mt-4">
+                <x-label for="mobile" :value="__('Mobile')" />
+
+                <x-input id="mobile" class="block mt-1 w-full" type="tel" name="mobile" :value="old('mobile')"
+                    required />
+            </div>
+
+            <!-- Date Of Birth -->
+            <div class="mt-4">
+                <x-label for="date_of_birth" :value="__('Date Of Birth')" />
+
+                <x-input id="date_of_birth" class="block mt-1 w-full" type="date" name="date_of_birth"
+                    :value="old('date_of_birth')" required />
+            </div>
+
+            <!-- Gender -->
+            <div class="mt-4">
+                <x-label for="gender" :value="__('Gender')" />
+
+                <x-form-select id="gender" :value="old('gender')" name="gender" :options="$gender"
+                    placeholder="Select gender" />
+            </div>
+
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
+                    autocomplete="new-password" />
             </div>
 
             <!-- Confirm Password -->
             <div class="mt-4">
                 <x-label for="password_confirmation" :value="__('Confirm Password')" />
 
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
+                <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
+                    name="password_confirmation" required />
             </div>
 
             <div class="flex items-center justify-end mt-4">
