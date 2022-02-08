@@ -19,6 +19,7 @@ class CreateClassSubjectsTable extends Migration
 			$table->integer('subject_id')->unsigned();
 			$table->timestamps();
 			$table->softDeletes();
+            $table->unique(['class_id', 'subject_id']);
         });
     }
 

@@ -11,7 +11,9 @@ class ClassDivision extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const CLASS_DIVISIONS_RENGE = 'A-I';
+    const CLASS_DIVISIONS_START = 'A';
+    const CLASS_DIVISIONS_END = 'I';
+    const CLASS_DIVISIONS_RENGE = ClassDivision::CLASS_DIVISIONS_START . '-' . ClassDivision::CLASS_DIVISIONS_END;
 
     const PAGINATION_COUNT = 10;
 

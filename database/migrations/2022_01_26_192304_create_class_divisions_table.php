@@ -19,6 +19,7 @@ class CreateClassDivisionsTable extends Migration
             $table->string('name', 50);
             $table->timestamps();
             $table->softDeletes();
+            $table->unique(['class_id', 'name']);
         });
     }
 
