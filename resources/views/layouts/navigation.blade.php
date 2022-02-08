@@ -104,25 +104,38 @@
                     <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-tachometer fa-2x" aria-hidden="true"></i>
                     {{ __('Dashboard') }}
                 </a>
+                @hasanyrole('admin')
+                    <a href="{{ route('admin.index') }}"
+                        class="{{ Route::is('admin*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/home -->
+                        <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-user-md fa-2x" aria-hidden="true"></i>
+                        {{ __('Admin') }}
+                    </a>
+                    <a href="{{ route('teacher.index') }}"
+                        class="{{ Route::is('teacher*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/home -->
+                        <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-user-circle-o fa-2x"
+                            aria-hidden="true"></i>
+                        {{ __('Teacher') }}
+                    </a>
+                    <a href="{{ route('classes.index') }}"
+                        class="{{ Route::is('classes*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/home -->
+                        <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-graduation-cap fa-2x"
+                            aria-hidden="true"></i>
+                        {{ __('Classes') }}
+                    </a>
+                @endhasanyrole
 
-                <a href="{{ route('admin.index') }}"
-                    class="{{ Route::is('admin*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                    <!-- Heroicon name: outline/home -->
-                    <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-user-md fa-2x" aria-hidden="true"></i>
-                    {{ __('Admin') }}
-                </a>
-                <a href="{{ route('teacher.index') }}"
-                    class="{{ Route::is('teacher*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                    <!-- Heroicon name: outline/home -->
-                    <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
-                    {{ __('Teacher') }}
-                </a>
-                <a href="{{ route('classes.index') }}"
-                    class="{{ Route::is('classes*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                    <!-- Heroicon name: outline/home -->
-                    <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-graduation-cap fa-2x" aria-hidden="true"></i>
-                    {{ __('Classes') }}
-                </a>
+                @hasanyrole('teacher|admin')
+                    <a href="{{ route('student.index') }}"
+                        class="{{ Route::is('student*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <!-- Heroicon name: outline/home -->
+                        <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-graduation-cap fa-2x"
+                            aria-hidden="true"></i>
+                        {{ __('Student') }}
+                    </a>
+                @endhasanyrole
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
