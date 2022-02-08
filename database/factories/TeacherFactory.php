@@ -22,6 +22,7 @@ class TeacherFactory extends Factory
             'date_of_birth' => $this->faker->dateTimeBetween('1990-01-01', '2017-12-31'),
             'email' => $this->faker->unique()->safeEmail(),
             'mobile' => $this->faker->phoneNumber(),
+            'degree' => $this->faker->word(),
         ];
     }
 }

@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
                 $teacher->remember_token = Str::random(10);
 
                 $teacherUser = clone $teacher->user();
-                $teacherUser->create(Arr::except($teacher->toArray(), ['id']))->save();
+                $teacherUser->create(Arr::except($teacher->toArray(), ['id', 'degree']))->save();
 
                 $teacher->user->assignRole($roles[2]);
             });
@@ -69,10 +69,10 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
 
-            // // ExaminationGroup
-            // ExaminationGroup::factory(4)->create([
-            //     'school_id' => $school->id
-            // ]);
+            // ExaminationGroup
+            ExaminationGroup::factory(4)->create([
+                'school_id' => $school->id
+            ]);
 
             // // Student
             // User::factory(100)->create([
