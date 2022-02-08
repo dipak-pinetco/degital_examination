@@ -83,14 +83,32 @@
                             </label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 <select wire:model='gender' id="gender" name="gender" autocomplete="gender-name"
-                                    class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+                                    class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                     <option value="">{{ __('Select gender') }}</option>
-                                    @foreach ($genderType as $gender1)
-                                        <option value="{{ $gender1 }}" {{ $gender }}>
-                                            {{ Str::ucfirst($gender1) }}</option>
+                                    @foreach ($genderTypes as $genderType)
+                                        <option value="{{ $genderType }}">
+                                            {{ Str::ucfirst($genderType) }}</option>
                                     @endforeach
                                 </select>
                                 @error('gender') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        <div
+                            class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                            <label for="subjects" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                Subjects
+                            </label>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                <select wire:model='subjects' multiple id="subjects" name="subjects" autocomplete="subjects-name"
+                                    class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    <option value="">{{ __('Select subjects') }}</option>
+                                    @foreach ($allSubjects as $subject)
+                                        <option value="{{ $subject->id }}">
+                                            {{ Str::ucfirst($subject->name) }}</option>
+                                    @endforeach
+                                </select>
+                                @error('subjects') <span class="error">{{ $message }}</span> @enderror
                             </div>
                         </div>
 

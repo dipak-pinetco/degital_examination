@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Teacher;
 
+use App\Models\Subject;
 use App\Models\Teacher;
 use Arr;
 use Carbon\Carbon;
@@ -16,11 +17,12 @@ class CreateTeacher extends Component
 {
     use WithFileUploads;
 
-    public $first_name, $last_name, $gender, $date_of_birth, $email, $password, $mobile, $degree, $avatar, $teacher;
+    public $first_name, $last_name, $gender, $date_of_birth, $email, $password, $mobile, $degree, $avatar, $teacher, $allSubjects, $subjects;
     public $status = 1;
 
     public function mount($teacher = null)
     {
+        $this->allSubjects = Subject::get();
         if ($teacher) {
             $this->teacher = $teacher;
             $this->first_name = $teacher->first_name;
@@ -31,6 +33,7 @@ class CreateTeacher extends Component
             // $this->password = $teacher->password;
             $this->mobile = $teacher->mobile;
             $this->degree = $teacher->degree;
+            $this->subjects = $teacher->subjects->pluck('id');
         }
     }
     protected function rules()
@@ -43,6 +46,7 @@ class CreateTeacher extends Component
             'date_of_birth' => ['required', 'date', 'before:' . Carbon::now()->subYears(5)],
             'mobile' => 'required',
             'degree' => 'required',
+            'subjects' => 'required|array|min:1',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 2MB Max
         ];
         if (is_null($this->teacher)) {
@@ -73,16 +77,16 @@ class CreateTeacher extends Component
         if (is_null($this->teacher)) {
             $validatedData['status'] = $this->status;
             $validatedData['school_id'] = auth()->user()->school_id;
-            $teacher = Teacher::create($validatedData);
+            $this->teacher = Teacher::create($validatedData);
 
-            $teacher->password = Hash::make($validatedData['password']);
-            $teacher->email_verified_at = now();
-            $teacher->remember_token = Str::random(10);
+            $this->teacher->password = Hash::make($validatedData['password']);
+            $this->teacher->email_verified_at = now();
+            $this->teacher->remember_token = Str::random(10);
 
-            $teacherUser = clone $teacher->user();
-            $teacherUser->create(Arr::except($teacher->toArray(), ['id']))->save();
+            $teacherUser = clone $this->teacher->user();
+            $teacherUser->create(Arr::except($this->teacher->toArray(), ['id']))->save();
 
-            $teacher->user->assignRole(Config::get('permission.roles')[2]);
+            $this->teacher->user->assignRole(Config::get('permission.roles')[2]);
 
             session()->flash('message', __('Teacher successfully created.'));
         } else {
@@ -93,6 +97,9 @@ class CreateTeacher extends Component
             session()->flash('message', __('Teacher successfully updated.'));
         }
 
+        // Sync Teacher Subject
+        $this->teacher->subjects()->Sync($this->subjects);
+
         session()->flash('class', 'green');
 
         return redirect()->route('teacher.index');
@@ -100,6 +107,6 @@ class CreateTeacher extends Component
 
     public function render()
     {
-        return view('livewire.teacher.create-teacher', ['genderType' => Teacher::getEnum('gender')]);
+        return view('livewire.teacher.create-teacher', ['genderTypes' => Teacher::getEnum('gender')]);
     }
 }

@@ -43,12 +43,12 @@ class CreateForeignKeys extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('no action');
         });
-        Schema::table('teacher_subjects', function (Blueprint $table) {
+        Schema::table('teacher_subject', function (Blueprint $table) {
             $table->foreign('teacher_id')->references('id')->on('teachers')
                 ->onDelete('cascade')
                 ->onUpdate('no action');
         });
-        Schema::table('teacher_subjects', function (Blueprint $table) {
+        Schema::table('teacher_subject', function (Blueprint $table) {
             $table->foreign('subject_id')->references('id')->on('subjects')
                 ->onDelete('cascade')
                 ->onUpdate('no action');
@@ -59,7 +59,7 @@ class CreateForeignKeys extends Migration
                 ->onUpdate('no action');
         });
         Schema::table('class_teacher_subjects', function (Blueprint $table) {
-            $table->foreign('teacher_subject_id')->references('id')->on('teacher_subjects')
+            $table->foreign('teacher_subject_id')->references('id')->on('teacher_subject')
                 ->onDelete('cascade')
                 ->onUpdate('no action');
         });
@@ -190,11 +190,11 @@ class CreateForeignKeys extends Migration
         Schema::table('teachers', function (Blueprint $table) {
             $table->dropForeign('teachers_school_id_foreign');
         });
-        Schema::table('teacher_subjects', function (Blueprint $table) {
-            $table->dropForeign('teacher_subjects_teacher_id_foreign');
+        Schema::table('teacher_subject', function (Blueprint $table) {
+            $table->dropForeign('teacher_subject_teacher_id_foreign');
         });
-        Schema::table('teacher_subjects', function (Blueprint $table) {
-            $table->dropForeign('teacher_subjects_subject_id_foreign');
+        Schema::table('teacher_subject', function (Blueprint $table) {
+            $table->dropForeign('teacher_subject_subject_id_foreign');
         });
         Schema::table('class_teacher_subjects', function (Blueprint $table) {
             $table->dropForeign('class_teacher_subjects_class_subject_id_foreign');

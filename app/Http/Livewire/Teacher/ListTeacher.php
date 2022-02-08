@@ -19,11 +19,15 @@ class ListTeacher extends Component
     {
         $teachers = Teacher::whereHas('school', function ($query) {
             $query->where('id', auth()->user()->school_id);
-        })->with(['user' => function ($query) {
-            $query->RoleUser(['teacher']);
-        }])->when(!empty($this->search), function ($query) {
-            $query->whereLike(['first_name'], $this->search);
-        })->orderBy('id', 'DESC')->paginate(Teacher::PAGINATION_COUNT)->withPath('/teacher')->withQueryString();
+        })
+            ->with(['user' => function ($query) {
+                $query->RoleUser(['teacher']);
+            }, 'subjects'])
+            ->when(!empty($this->search), function ($query) {
+                $query->whereLike(['first_name'], $this->search);
+            })
+            ->orderBy('id', 'DESC')->paginate(Teacher::PAGINATION_COUNT)
+            ->withPath('/teacher')->withQueryString();
 
         return view('livewire.teacher.list-teacher', ['teachers' => $teachers]);
     }

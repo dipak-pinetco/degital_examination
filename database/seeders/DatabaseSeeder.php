@@ -4,14 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\AcademicYear;
 use App\Models\Clases;
-use App\Models\ClassDivision;
-use App\Models\ClassSubject;
-use App\Models\ExaminationGroup;
 use App\Models\School;
-use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
-use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
@@ -62,7 +57,7 @@ class DatabaseSeeder extends Seeder
                 $teacher->user->assignRole($roles[2]);
 
                 // Assign Subject
-                $this->call(TeacherSubjectSeeder::class, false, [
+                $this->call(SubjectTeacherSeeder::class, false, [
                     'teacher_id' => $teacher->id,
                 ]);
             });

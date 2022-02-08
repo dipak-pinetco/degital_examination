@@ -7,6 +7,7 @@ use Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Storage;
@@ -60,7 +61,7 @@ class Teacher extends Model
             $updateFiled = Arr::except($teacher->getDirty(), ['degree']);
             $teacher->user()->update($updateFiled);
         });
-        
+
         static::deleting(function ($teacher) {
             $teacher->user()->delete();
         });
@@ -84,6 +85,16 @@ class Teacher extends Model
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
+    }
+
+    /**
+     * Get all of the subjects for the Teacher
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function subjects(): BelongsToMany
+    {
+        return $this->belongsToMany(Subject::class);
     }
 
     public function getAvatarPathAttribute()
