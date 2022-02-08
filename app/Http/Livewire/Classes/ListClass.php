@@ -17,7 +17,10 @@ class ListClass extends Component
 
     public function render()
     {
-        $classes = Clases::with(['school', 'divisions'])
+        $classes = Clases::whereHas('school', function ($query) {
+            $query->where('id', auth()->user()->school_id);
+        })
+            ->with(['school', 'divisions'])
             ->when(!empty($this->search), function ($query) {
                 $query->whereLike(['name'], $this->search);
             })
