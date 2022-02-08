@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Clases;
 use App\Models\ClassSubject;
 use App\Models\Subject;
 use Carbon\Carbon;
@@ -17,17 +18,6 @@ class ClassSubjectSeeder extends Seeder
     public function run($class_id)
     {
         $randomSubjectsId = Subject::all()->random(rand(1, 12))->pluck('id');
-
-        $insertData = [];
-        foreach ($randomSubjectsId as  $subject_id) {
-            array_push($insertData, [
-                'subject_id' => $subject_id,
-                'class_id' => $class_id,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-        }
-
-        ClassSubject::insert($insertData);
+        Clases::find($class_id)->subjects()->sync($randomSubjectsId);
     }
 }

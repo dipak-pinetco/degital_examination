@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Classes;
 
 use App\Models\Clases;
 use App\Models\ClassDivision;
+use App\Models\Subject;
 use App\Rules\AlphabeticalSequence;
 use App\Rules\Sequence;
 use Illuminate\Support\Arr;
@@ -13,22 +14,25 @@ use Livewire\Component;
 
 class CreateClass extends Component
 {
-    public $name, $class;
+    public $name, $class, $allSubjects, $subjects;
     public array $divisions = [];
 
     public function mount($class = null)
     {
+        $this->allSubjects = Subject::get();
         if ($class) {
             $this->class = $class;
             $this->name = $class->name;
             $this->divisions = $class->divisions->pluck('name', 'name')->toArray();
+            $this->subjects = $class->subjects->pluck('id');
         }
     }
 
     protected function rules()
     {
         $validation = [
-            'divisions' => ['required', 'min:1', new Sequence(ClassDivision::class_divisions_array())]
+            'divisions' => ['required', 'min:1', new Sequence(ClassDivision::class_divisions_array())],
+            'subjects' => 'required|array|min:1',
         ];
 
         if (is_null($this->class)) {
@@ -40,6 +44,7 @@ class CreateClass extends Component
                 return $query->where('school_id', auth()->user()->school_id);
             })->ignore($this->class->id)];
         }
+
         return $validation;
     }
 
@@ -65,6 +70,9 @@ class CreateClass extends Component
             $this->class->fill($validatedData)->save();
             session()->flash('message', __('Classes successfully updated.'));
         }
+
+        // Sync Teacher Subject
+        $this->class->subjects()->Sync($this->subjects);
 
         $available_divisions = collect(
             $this->class->divisions()

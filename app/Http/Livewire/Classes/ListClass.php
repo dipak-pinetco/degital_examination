@@ -17,9 +17,12 @@ class ListClass extends Component
 
     public function render()
     {
-        $classes = Clases::with(['school','divisions'])->when(!empty($this->search), function ($query) {
-            $query->whereLike(['name'], $this->search);
-        })->orderBy('id', 'ASC')->paginate(Clases::PAGINATION_COUNT)->withPath('/classes')->withQueryString();
+        $classes = Clases::with(['school', 'divisions'])
+            ->when(!empty($this->search), function ($query) {
+                $query->whereLike(['name'], $this->search);
+            })
+            ->orderBy('id', 'ASC')->paginate(Clases::PAGINATION_COUNT)
+            ->withPath('/classes')->withQueryString();
         return view('livewire.classes.list-class', ['classes' => $classes]);
     }
 
