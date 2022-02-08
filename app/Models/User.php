@@ -23,8 +23,12 @@ class User extends Authenticatable
     const GENDER_MALE = 'Male';
     const GENDER_FEMALE = 'Female';
     const GENDER_OTHER = 'Other';
-
     protected $enumGenders = [User::GENDER_MALE, User::GENDER_FEMALE, User::GENDER_OTHER];
+
+    const STATUS_ACTIVE = 'Male';
+    const STATUS_BLOCK = 'Female';
+    const STATUS_DRAFT = 'Other';
+    protected $enumStatus = [User::STATUS_ACTIVE, User::STATUS_BLOCK, User::STATUS_DRAFT];
 
     /**
      * The attributes that are mass assignable.

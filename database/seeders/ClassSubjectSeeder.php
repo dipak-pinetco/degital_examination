@@ -15,9 +15,9 @@ class ClassSubjectSeeder extends Seeder
      *
      * @return void
      */
-    public function run($class_id)
+    public function run($clases_id)
     {
         $randomSubjectsId = Subject::all()->random(rand(1, 12))->pluck('id');
-        Clases::find($class_id)->subjects()->sync($randomSubjectsId);
+        Clases::find($clases_id)->subjects()->sync($randomSubjectsId);
     }
 }

@@ -14,8 +14,8 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->increments('id');
-			$table->integer('user_id')->unsigned();
+            $table->id('id');
+			$table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
 			$table->string('gr_number', 25);
 			$table->timestamps();
 			$table->softDeletes();

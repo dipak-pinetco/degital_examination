@@ -68,12 +68,12 @@ class DatabaseSeeder extends Seeder
             ])->each(function ($class) {
                 // Class Division
                 $this->call(ClassDivisionSeeder::class, false, [
-                    'class_id' => $class->id,
+                    'clases_id' => $class->id,
                 ]);
 
                 // Class Subject
                 $this->call(ClassSubjectSeeder::class, false, [
-                    'class_id' => $class->id,
+                    'clases_id' => $class->id,
                 ]);
             });
 

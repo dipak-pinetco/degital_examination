@@ -14,9 +14,9 @@ class CreateStudentClassExaminationsTable extends Migration
     public function up()
     {
         Schema::create('student_class_examinations', function (Blueprint $table) {
-            $table->increments('id');
-			$table->integer('student_class_id')->unsigned();
-			$table->integer('examination_id')->unsigned();
+            $table->id('id');
+			$table->foreignId('student_class_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+			$table->foreignId('examination_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
 			$table->boolean('student_present')->default(0);
 			$table->enum('paper_check_status', array('pending', 'check', 'copycase'));
 			$table->mediumText('teachers_nots')->nullable();

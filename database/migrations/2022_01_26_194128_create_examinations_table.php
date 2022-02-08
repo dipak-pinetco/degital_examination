@@ -14,19 +14,18 @@ class CreateExaminationsTable extends Migration
     public function up()
     {
         Schema::create('examinations', function (Blueprint $table) {
-            $table->increments('id');
-			$table->integer('examination_group_id')->unsigned()->nullable();
-			$table->integer('academic_year_id')->unsigned();
-			$table->integer('examinationable_id');
-			$table->string('examinationable_type', 100);
-			$table->string('name', 100)->nullable();
-			$table->datetime('start_datetime')->nullable();
-			$table->integer('total_time');
-			$table->integer('total_marks');
-			$table->integer('passout_marks');
-			$table->integer('supervision_teacher_id')->unsigned();
-			$table->timestamps();
-			$table->softDeletes();
+            $table->id('id');
+            $table->foreignId('examination_group_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('academic_year_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('supervision_teacher_id')->constrained('teachers')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->morphs('examinationable');
+            $table->string('name', 100)->nullable();
+            $table->datetime('start_datetime')->nullable();
+            $table->integer('total_time');
+            $table->integer('total_marks');
+            $table->integer('passout_marks');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

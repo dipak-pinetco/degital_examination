@@ -55,9 +55,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role:admin|teacher']], function () {
         Route::prefix('/student')->group(function () {
-            Route::get('/edit/{id}', UpdateStudent::class)->name('student.edit');
-            Route::get('/create', CreateStudent::class)->name('student.create');
-            Route::get('/', ListStudent::class, 'render')->name('student.index');
+            // Route::get('/edit/{id}', UpdateStudent::class)->name('student.edit');
+            // Route::get('/create', CreateStudent::class)->name('student.create');
+            // Route::get('/', ListStudent::class, 'render')->name('student.index');
         });
     });
 });

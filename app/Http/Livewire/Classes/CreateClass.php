@@ -62,7 +62,6 @@ class CreateClass extends Component
         $this->divisions = Arr::sort(array_filter($this->divisions));
         $validatedData = $this->validate();
         $validatedData['school_id'] = auth()->user()->school_id;
-
         if (is_null($this->class)) {
             $this->class = Clases::create($validatedData);
             session()->flash('message', __('Classes successfully created.'));
@@ -76,18 +75,15 @@ class CreateClass extends Component
 
         $available_divisions = collect(
             $this->class->divisions()
-                ->select('id', 'class_id', 'name')
+                ->select('id', 'clases_id', 'name')
                 ->whereIn('name', array_values($this->divisions))->get()
         );
-
-        $updatedDivisions = [];
-
+        $updatedDivisions = $available_divisions->toArray();
         foreach (array_values($this->divisions) as $key => $value) {
             if ($available_divisions->where('name', $value)->isEmpty()) {
                 $updatedDivisions[] = ['name' => $value];
             }
         }
-        $updatedDivisions = array_merge($updatedDivisions, $available_divisions->toArray());
         $this->class->divisions()->sync($updatedDivisions);
 
         session()->flash('class', 'green');

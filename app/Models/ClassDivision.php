@@ -19,7 +19,7 @@ class ClassDivision extends Model
 
     public static function class_divisions_array()
     {
-        return range('A', 'I');
+        return range(ClassDivision::CLASS_DIVISIONS_START, ClassDivision::CLASS_DIVISIONS_END);
     }
 
     /**
@@ -46,6 +46,6 @@ class ClassDivision extends Model
      */
     public function class(): BelongsTo
     {
-        return $this->belongsTo(Clases::class);
+        return $this->belongsTo(Clases::class,'clases_id');
     }
 }

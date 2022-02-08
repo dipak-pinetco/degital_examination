@@ -128,13 +128,13 @@
                 @endhasanyrole
 
                 @hasanyrole('teacher|admin')
-                    <a href="{{ route('student.index') }}"
+                    {{-- <a href="{{ route('student.index') }}"
                         class="{{ Route::is('student*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/home -->
                         <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-graduation-cap fa-2x"
                             aria-hidden="true"></i>
                         {{ __('Student') }}
-                    </a>
+                    </a> --}}
                 @endhasanyrole
 
                 <form method="POST" action="{{ route('logout') }}">

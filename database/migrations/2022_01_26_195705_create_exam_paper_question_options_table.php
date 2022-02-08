@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClassDivisionsTable extends Migration
+class CreateExamPaperQuestionOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateClassDivisionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('class_divisions', function (Blueprint $table) {
+        Schema::create('exam_paper_question_options', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('clases_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('name', 50);
+            $table->foreignId('exam_paper_question_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('value', 150);
+            $table->boolean('is_right')->default(0);
             $table->timestamps();
             $table->softDeletes();
-            $table->unique(['clases_id', 'name']);
         });
     }
 
@@ -30,6 +30,6 @@ class CreateClassDivisionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('class_divisions');
+        Schema::dropIfExists('exam_paper_question_options');
     }
 }

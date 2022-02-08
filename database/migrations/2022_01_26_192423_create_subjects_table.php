@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExaminationPaperQuestionOptionsTable extends Migration
+class CreateSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateExaminationPaperQuestionOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('examination_paper_question_options', function (Blueprint $table) {
-            $table->increments('id');
-			$table->integer('examination_paper_question_id')->unsigned();
-			$table->string('value', 150);
-			$table->boolean('is_right')->default(0);
+        Schema::create('subjects', function (Blueprint $table) {
+            $table->id('id');
+			$table->string('name', 50)->unique();
 			$table->timestamps();
 			$table->softDeletes();
         });
@@ -30,6 +28,6 @@ class CreateExaminationPaperQuestionOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('examination_paper_question_options');
+        Schema::dropIfExists('subjects');
     }
 }

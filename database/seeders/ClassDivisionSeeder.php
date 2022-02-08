@@ -13,9 +13,9 @@ class ClassDivisionSeeder extends Seeder
      *
      * @return void
      */
-    public function run($class_id)
+    public function run($clases_id)
     {
-        $classDivisionRenge = collect(range(ClassDivision::CLASS_DIVISIONS_START, ClassDivision::CLASS_DIVISIONS_END));
+        $classDivisionRenge = collect(ClassDivision::class_divisions_array());
 
         $randomDivisionCount = rand(1, count($classDivisionRenge));
 
@@ -23,7 +23,7 @@ class ClassDivisionSeeder extends Seeder
         foreach ($classDivisionRenge->take($randomDivisionCount) as  $division) {
             array_push($insertData, [
                 'name' => $division,
-                'class_id' => $class_id,
+                'clases_id' => $clases_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

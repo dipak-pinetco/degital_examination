@@ -74,7 +74,7 @@ class Clases extends Model
      */
     public function divisions(): HasMany
     {
-        return $this->hasMany(ClassDivision::class, 'class_id', 'id');
+        return $this->hasMany(ClassDivision::class);
     }
 
     /**

@@ -14,11 +14,9 @@ class CreateStudentClassesTable extends Migration
     public function up()
     {
         Schema::create('student_classes', function (Blueprint $table) {
-            $table->increments('id');
-			$table->integer('student_id')->unsigned();
-			$table->integer('class_division_id')->unsigned();
-			$table->timestamps();
-			$table->softDeletes();
+            $table->id('id');
+			$table->foreignId('student_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+			$table->foreignId('class_division_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

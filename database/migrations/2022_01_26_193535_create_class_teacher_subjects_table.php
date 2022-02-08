@@ -14,11 +14,9 @@ class CreateClassTeacherSubjectsTable extends Migration
     public function up()
     {
         Schema::create('class_teacher_subjects', function (Blueprint $table) {
-            $table->increments('id');
-			$table->integer('class_subject_id')->unsigned();
-			$table->integer('teacher_subject_id')->unsigned();
-			$table->timestamps();
-			$table->softDeletes();
+            $table->id('id');
+            $table->foreignId('class_subject_id')->constrained('clases_subject')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('subject_teacher_id')->constrained('subject_teacher')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

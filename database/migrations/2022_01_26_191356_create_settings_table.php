@@ -14,7 +14,7 @@ class CreateSettingsTable extends Migration
     public function up()
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id('id');
             $table->string('key', 100);
             $table->string('value', 191);
             $table->enum('status', array('1', '0', '2'))->default(1);

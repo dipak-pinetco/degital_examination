@@ -14,8 +14,8 @@ class CreateExaminationGroupsTable extends Migration
     public function up()
     {
         Schema::create('examination_groups', function (Blueprint $table) {
-            $table->increments('id');
-			$table->integer('school_id')->unsigned();
+            $table->id('id');
+            $table->foreignId('school_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
 			$table->string('name', 50);
 			$table->timestamps();
 			$table->softDeletes();
