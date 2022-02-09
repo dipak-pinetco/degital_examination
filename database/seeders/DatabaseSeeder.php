@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\AcademicYear;
 use App\Models\Clases;
 use App\Models\School;
+use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -25,7 +26,7 @@ class DatabaseSeeder extends Seeder
     {
         $roles = Config::get('permission.roles');
         foreach ($roles as $key => $role) {
-            if ($role == 'teacher') {
+            if (in_array($role, ['teacher', 'student'])) {
                 Role::create(['guard_name' => $role, 'name' => $role]);
             } else {
                 Role::create(['name' => $role]);
@@ -74,17 +75,18 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
 
+            // Student
+            Student::factory(100)->create([
+                'school_id' => $school->id
+            ])->each(function ($user) use ($roles) {
+                $user->assignRole($roles[3]);
+            });
+
             // ExaminationGroup
             // ExaminationGroup::factory(4)->create([
             //     'school_id' => $school->id
             // ]);
 
-            // // Student
-            // User::factory(100)->create([
-            //     'school_id' => $school->id
-            // ])->each(function ($user) use ($roles) {
-            //     $user->assignRole($roles[3]);
-            // });
         });
     }
 }

@@ -68,11 +68,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function user(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
     public function getAvatarPathAttribute()
     {
         return is_null($this->avatar) ? 'https://www.gravatar.com/avatar/' . md5($this->email) . '?d=mp&f=y' : Storage::url($this->avatar);

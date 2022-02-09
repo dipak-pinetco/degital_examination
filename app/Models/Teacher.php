@@ -5,10 +5,8 @@ namespace App\Models;
 use App\Traits\Enums;
 use Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -27,11 +25,6 @@ class Teacher extends Authenticatable
     const GENDER_FEMALE = 'Female';
     const GENDER_OTHER = 'Other';
     protected $enumGenders = [User::GENDER_MALE, User::GENDER_FEMALE, User::GENDER_OTHER];
-
-    const STATUS_ACTIVE = 'Male';
-    const STATUS_BLOCK = 'Female';
-    const STATUS_DRAFT = 'Other';
-    protected $enumStatus = [User::STATUS_ACTIVE, User::STATUS_BLOCK, User::STATUS_DRAFT];
 
     /**
      * The attributes that are mass assignable.
@@ -72,33 +65,6 @@ class Teacher extends Authenticatable
         'date_of_birth' => 'date:Y-m-d',
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    protected static function booted()
-    {
-        // static::updating(function ($teacher) {
-        //     $updateFiled = Arr::except($teacher->getDirty(), ['degree']);
-        //     $teacher->user()->update($updateFiled);
-        // });
-
-        // static::deleting(function ($teacher) {
-        //     $teacher->user()->delete();
-        // });
-    }
-
-    /**
-     * Get the user that owns the Teacher
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
-     */
-    public function user(): MorphOne
-    {
-        return $this->morphOne(User::class, 'userable');
-    }
 
     /**
      * Get the school that owns the Teacher

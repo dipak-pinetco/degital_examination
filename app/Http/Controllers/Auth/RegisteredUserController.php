@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\School;
+use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -31,7 +32,7 @@ class RegisteredUserController extends Controller
     public function create()
     {
         $gender = array_combine(User::getEnum('gender'), User::getEnum('gender'));
-        $roles = Arr::except(array_combine(Config::get('permission.roles'), Config::get('permission.roles')), ['super-admin', 'student']);
+        $roles = Arr::except(array_combine(Config::get('permission.roles'), Config::get('permission.roles')), ['super-admin']);
         $schools = School::get()->pluck('name', 'id');
         return view('auth.register', compact('gender', 'roles', 'schools'));
     }
@@ -65,16 +66,10 @@ class RegisteredUserController extends Controller
             $user = User::create(Arr::except($validatedData, ['role']));
             $user->assignRole($validatedData['role']);
         } elseif ($validatedData['role'] == 'teacher') {
-            $teacher = Teacher::create(Arr::except($validatedData, ['role']));
-            $teacher->password = $validatedData['password'];
-            $teacher->email_verified_at = now();
-            $teacher->remember_token = Str::random(10);
-
-            $teacherUser = clone $teacher->user();
-            $teacherUser->create(Arr::except($teacher->toArray(), ['id']))->save();
-
-            $teacher->user->assignRole($validatedData['role']);
-            $user = $teacher->user;
+            $user = User::create(Arr::except($validatedData, ['role']));
+        } elseif ($validatedData['role'] == 'student') {
+            $user = Student::create(Arr::except($validatedData, ['role']));
+            $user->assignRole($validatedData['role']);
         }
         DB::commit();
 

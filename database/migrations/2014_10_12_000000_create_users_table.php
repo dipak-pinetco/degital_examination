@@ -26,7 +26,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('mobile', 20)->nullable();
             $table->string('avatar', 100)->nullable();
-            $table->morphs('userable');
             $table->enum('status', [1, 0, 2])->comment("1 = Active, 0 = Block, 2 = Draft");
             $table->rememberToken();
             $table->timestamps();

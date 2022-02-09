@@ -51,9 +51,9 @@ class CreateTeacher extends Component
         ];
         if (is_null($this->teacher)) {
             $validation['password'] = 'required';
-            $validation['email'] = ['required', 'email', Rule::unique('users')];
+            $validation['email'] = ['required', 'email', Rule::unique('teachers')];
         } else {
-            $validation['email'] = ['required', 'email', Rule::unique('users')->ignore($this->teacher->id)];
+            $validation['email'] = ['required', 'email', Rule::unique('teachers')->ignore($this->teacher->id)];
         }
         return $validation;
     }

@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Teacher;
+namespace App\Http\Livewire\Student;
 
-use App\Models\Teacher;
-use DB;
+use App\Models\Student;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ListTeacher extends Component
+class ListStudent extends Component
 {
     use WithPagination;
 
@@ -17,23 +16,22 @@ class ListTeacher extends Component
 
     public function render()
     {
-        $teachers = Teacher::RoleUser(['teacher'])
+        $students = Student::RoleUser(['student'])
             ->whereHas('school', function ($query) {
                 $query->where('id', auth()->user()->school_id);
             })
-            ->with(['subjects'])
             ->when(!empty($this->search), function ($query) {
                 $query->whereLike(['first_name'], $this->search);
             })
-            ->orderBy('id', 'DESC')->paginate(Teacher::PAGINATION_COUNT)
-            ->withPath('/teacher')->withQueryString();
+            ->orderBy('id', 'DESC')->paginate(Student::PAGINATION_COUNT)
+            ->withPath('/student')->withQueryString();
 
-        return view('livewire.teacher.list-teacher', ['teachers' => $teachers]);
+        return view('livewire.student.list-student', ['students' => $students]);
     }
 
-    public function teacherDelete(Teacher $teacher)
+    public function studentDelete(Student $student)
     {
-        $teacher->delete();
+        $student->delete();
         session()->flash('message', __('Admin successfully deleted.'));
         session()->flash('class', 'green');
     }
