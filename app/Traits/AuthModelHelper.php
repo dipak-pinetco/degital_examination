@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\School;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Storage;
 
@@ -22,14 +23,14 @@ trait AuthModelHelper
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
-    public function scopeRoleUser($query, array $roles)
+    public function scoperoleUser($query, array $roles)
     {
         $query->with(['roles'])
-        ->when(!auth()->user()->hasRole('super-admin'), function ($query) {
-            $query->whereHas('school', function ($query) {
-                $query->where('id', auth()->user()->school_id);
+            ->when(!auth()->user()->hasRole('superAdmin'), function ($query) {
+                $query->whereHas('school', function ($query) {
+                    $query->where('id', auth()->user()->school_id);
+                });
             });
-        });
 
         foreach ($roles as $key => $role) {
             $query->whereHas('roles', function ($q) use ($role) {

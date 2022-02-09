@@ -17,7 +17,7 @@ class ListTeacher extends Component
 
     public function render()
     {
-        $teachers = Teacher::RoleUser(['teacher'])
+        $teachers = Teacher::roleUser(['teacher'])
             ->whereHas('school', function ($query) {
                 $query->where('id', auth()->user()->school_id);
             })

@@ -32,7 +32,7 @@ class RegisteredUserController extends Controller
     public function create()
     {
         $gender = array_combine(User::getEnum('gender'), User::getEnum('gender'));
-        $roles = Arr::except(array_combine(Config::get('permission.roles'), Config::get('permission.roles')), ['super-admin']);
+        $roles = Arr::except(array_combine(Config::get('permission.roles'), Config::get('permission.roles')), ['superAdmin']);
         $schools = School::get()->pluck('name', 'id');
         return view('auth.register', compact('gender', 'roles', 'schools'));
     }

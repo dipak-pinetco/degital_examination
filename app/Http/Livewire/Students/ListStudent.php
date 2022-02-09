@@ -16,7 +16,7 @@ class ListStudent extends Component
 
     public function render()
     {
-        $students = Student::RoleUser(['student'])
+        $students = Student::roleUser(['student'])
             ->whereHas('school', function ($query) {
                 $query->where('id', auth()->user()->school_id);
             })

@@ -16,7 +16,7 @@ class ListAdmin extends Component
 
     public function render()
     {
-        $users = User::RoleUser(['admin'])
+        $users = User::roleUser(['admin'])
             ->when(!empty($this->search), function ($query) {
                 $query->whereLike(['first_name'], $this->search);
             })->orderBy('id', 'DESC')->paginate(User::PAGINATION_COUNT)->withPath('/admin')->withQueryString();
