@@ -16,16 +16,20 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('school_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('school_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('first_name', 25);
             $table->string('last_name', 25);
             $table->enum('gender', Teacher::getEnum('gender'));
             $table->date('date_of_birth');
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
             $table->string('mobile', 20)->nullable();
             $table->string('avatar', 100)->nullable();
-            $table->string('degree', 191)->nullable();
+            // $table->morphs('userable');
             $table->enum('status', [1, 0, 2])->comment("1 = Active, 0 = Block, 2 = Draft");
+            $table->string('degree', 125);
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });

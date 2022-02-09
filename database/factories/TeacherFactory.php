@@ -21,8 +21,12 @@ class TeacherFactory extends Factory
             'gender' => $this->faker->randomElement(User::getEnum('gender')),
             'date_of_birth' => $this->faker->dateTimeBetween('1990-01-01', '2017-12-31'),
             'email' => $this->faker->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'mobile' => $this->faker->phoneNumber(),
+            'remember_token' => Str::random(10),
             'degree' => $this->faker->word(),
+            'status' => 1,
         ];
     }
 }

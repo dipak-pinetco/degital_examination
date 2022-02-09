@@ -25,57 +25,61 @@ class DatabaseSeeder extends Seeder
     {
         $roles = Config::get('permission.roles');
         foreach ($roles as $key => $role) {
-            Role::create(['name' => $role]);
+            if ($role == 'teacher') {
+                Role::create(['guard_name' => $role, 'name' => $role]);
+            } else {
+                Role::create(['name' => $role]);
+            }
         }
 
         $this->call(SubjectSeeder::class);
 
-        School::factory(5)->create()->each(function ($school) use ($roles) {
-            // AcademicYear
-            AcademicYear::factory(rand(5, 7))->create([
-                'school_id' => $school->id
-            ]);
+        School::factory(1)->create()->each(function ($school) use ($roles) {
+            // // AcademicYear
+            // AcademicYear::factory(rand(5, 7))->create([
+            //     'school_id' => $school->id
+            // ]);
 
-            // Admin
-            User::factory(5)->create([
-                'school_id' => $school->id
-            ])->each(function ($user) use ($roles) {
-                $user->assignRole($roles[1]);
-            });
+            // // Admin
+            // User::factory(5)->create([
+            //     'school_id' => $school->id
+            // ])->each(function ($user) use ($roles) {
+                // $user->assignRole($roles[1]);
+            // });
 
             // Teacher
             Teacher::factory(10)->create([
                 'school_id' => $school->id
             ])->each(function ($teacher) use ($roles) {
-                $teacher->password = Hash::make('password');
-                $teacher->email_verified_at = now();
-                $teacher->remember_token = Str::random(10);
+                // $teacher->password = Hash::make('password');
+                // $teacher->email_verified_at = now();
+                // $teacher->remember_token = Str::random(10);
 
-                $teacherUser = clone $teacher->user();
-                $teacherUser->create(Arr::except($teacher->toArray(), ['id', 'degree']))->save();
+                // $teacherUser = clone $teacher->user();
+                // $teacherUser->create(Arr::except($teacher->toArray(), ['id', 'degree']))->save();
 
-                $teacher->user->assignRole($roles[2]);
+                $teacher->assignRole($roles[2]);
 
-                // Assign Subject
-                $this->call(SubjectTeacherSeeder::class, false, [
-                    'teacher_id' => $teacher->id,
-                ]);
+                // // Assign Subject
+                // $this->call(SubjectTeacherSeeder::class, false, [
+                //     'teacher_id' => $teacher->id,
+                // ]);
             });
 
-            // Class
-            Clases::factory(rand(5, 10))->create([
-                'school_id' => $school->id
-            ])->each(function ($class) {
-                // Class Division
-                $this->call(ClassDivisionSeeder::class, false, [
-                    'clases_id' => $class->id,
-                ]);
+            // // Class
+            // Clases::factory(rand(5, 10))->create([
+            //     'school_id' => $school->id
+            // ])->each(function ($class) {
+            //     // Class Division
+            //     $this->call(ClassDivisionSeeder::class, false, [
+            //         'clases_id' => $class->id,
+            //     ]);
 
-                // Class Subject
-                $this->call(ClassSubjectSeeder::class, false, [
-                    'clases_id' => $class->id,
-                ]);
-            });
+            //     // Class Subject
+            //     $this->call(ClassSubjectSeeder::class, false, [
+            //         'clases_id' => $class->id,
+            //     ]);
+            // });
 
             // ExaminationGroup
             // ExaminationGroup::factory(4)->create([

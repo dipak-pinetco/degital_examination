@@ -10,18 +10,28 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Storage;
 
-class Teacher extends Model
+class Teacher extends Authenticatable
 {
-    use HasFactory, SoftDeletes, Enums;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Enums, SoftDeletes;
+
+    protected $guard = 'teacher';
 
     const PAGINATION_COUNT = 10;
     const GENDER_MALE = 'Male';
     const GENDER_FEMALE = 'Female';
     const GENDER_OTHER = 'Other';
+    protected $enumGenders = [User::GENDER_MALE, User::GENDER_FEMALE, User::GENDER_OTHER];
 
-    protected $enumGenders = [Teacher::GENDER_MALE, Teacher::GENDER_FEMALE, Teacher::GENDER_OTHER];
+    const STATUS_ACTIVE = 'Male';
+    const STATUS_BLOCK = 'Female';
+    const STATUS_DRAFT = 'Other';
+    protected $enumStatus = [User::STATUS_ACTIVE, User::STATUS_BLOCK, User::STATUS_DRAFT];
 
     /**
      * The attributes that are mass assignable.
@@ -35,11 +45,23 @@ class Teacher extends Model
         'gender',
         'date_of_birth',
         'email',
+        'password',
         'mobile',
         'status',
         'avatar',
         'degree',
     ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
 
     /**
      * The attributes that should be cast.
@@ -48,6 +70,7 @@ class Teacher extends Model
      */
     protected $casts = [
         'date_of_birth' => 'date:Y-m-d',
+        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -57,14 +80,14 @@ class Teacher extends Model
      */
     protected static function booted()
     {
-        static::updating(function ($teacher) {
-            $updateFiled = Arr::except($teacher->getDirty(), ['degree']);
-            $teacher->user()->update($updateFiled);
-        });
+        // static::updating(function ($teacher) {
+        //     $updateFiled = Arr::except($teacher->getDirty(), ['degree']);
+        //     $teacher->user()->update($updateFiled);
+        // });
 
-        static::deleting(function ($teacher) {
-            $teacher->user()->delete();
-        });
+        // static::deleting(function ($teacher) {
+        //     $teacher->user()->delete();
+        // });
     }
 
     /**
@@ -119,6 +142,27 @@ class Teacher extends Model
             case '2':
                 return 'Draft';
                 break;
+        }
+    }
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     */
+    public function scopeRoleUser($query, array $roles)
+    {
+        $query->with(['roles'])
+            ->when(!auth()->user()->hasRole('super-admin'), function ($query) {
+                $query->whereHas('school', function ($query) {
+                    $query->where('id', auth()->user()->school_id);
+                });
+            });
+
+        foreach ($roles as $key => $role) {
+            $query->whereHas('roles', function ($q) use ($role) {
+                $q->where('name', $role);
+            });
         }
     }
 }
