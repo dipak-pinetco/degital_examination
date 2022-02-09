@@ -105,13 +105,13 @@
                     {{ __('Dashboard') }}
                 </a>
                 @hasanyrole('admin')
-                    <a href="{{ route('admin.index') }}"
+                    <a href="{{ route('admins.index') }}"
                         class="{{ Route::is('admin*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/home -->
                         <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-user-md fa-2x" aria-hidden="true"></i>
                         {{ __('Admin') }}
                     </a>
-                    <a href="{{ route('teacher.index') }}"
+                    <a href="{{ route('teachers.index') }}"
                         class="{{ Route::is('teacher*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/home -->
                         <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-user-circle-o fa-2x"
@@ -128,7 +128,7 @@
                 @endhasanyrole
 
                 @hasanyrole('teacher|admin')
-                    <a href="{{ route('student.index') }}"
+                    <a href="{{ route('students.index') }}"
                         class="{{ Route::is('student*') ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/home -->
                         <i class="mr-3 flex-shrink-0 h-8 w-6 text-indigo-300 fa fa-graduation-cap fa-2x"

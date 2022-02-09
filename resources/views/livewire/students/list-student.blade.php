@@ -10,7 +10,7 @@
             <div class="flex border-2 border-gray-200 rounded">
                 <input wire:model="search" type="text" class="px-4 py-2 w-80" placeholder="Search...">
 
-                <a href="{{ route('student.create') }}"
+                <a href="{{ route('students.create') }}"
                     class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
                     Create
                 </a>
@@ -70,7 +70,7 @@
                                             {{ Str::ucfirst($student->roles[0]->name) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{ route('student.edit', $student->id) }}"
+                                            <a href="{{ route('students.edit', $student->id) }}"
                                                 class="bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-600 rounded">Edit</a>
                                             <a href="javascript:void(0)"
                                                 Wire:click="studentDelete({{ $student->id }})"

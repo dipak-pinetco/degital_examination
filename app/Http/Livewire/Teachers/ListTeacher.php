@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Teacher;
+namespace App\Http\Livewire\Teachers;
 
 use App\Models\Teacher;
 use DB;
@@ -28,7 +28,7 @@ class ListTeacher extends Component
             ->orderBy('id', 'DESC')->paginate(Teacher::PAGINATION_COUNT)
             ->withPath('/teacher')->withQueryString();
 
-        return view('livewire.teacher.list-teacher', ['teachers' => $teachers]);
+        return view('livewire.teachers.list-teacher', ['teachers' => $teachers]);
     }
 
     public function teacherDelete(Teacher $teacher)

@@ -1,16 +1,17 @@
 <div>
     <x-slot name="header">
-        <h1 class="text-2xl font-semibold text-gray-900">{{ __('Teacher') }}</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">{{ __('Admin') }}</h1>
     </x-slot>
 
     <div class="py-4">
         @livewire('component.flash-message')
+
         <!-- This example requires Tailwind CSS v2.0+ -->
         <div class="flex items-center justify-center ">
             <div class="flex border-2 border-gray-200 rounded">
                 <input wire:model="search" type="text" class="px-4 py-2 w-80" placeholder="Search...">
 
-                <a href="{{ route('teacher.create') }}"
+                <a href="{{ route('admins.create') }}"
                     class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
                     Create
                 </a>
@@ -42,45 +43,44 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach ($teachers as $teacher)
+                                @foreach ($users as $user)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0 h-10 w-10">
                                                     <img class="h-10 w-10 rounded-full"
-                                                        src="{{ $teacher->avatar_path }}" alt="">
+                                                        src="{{ $user->avatar_path }}" alt="">
                                                 </div>
                                                 <div class="ml-4">
                                                     <div class="text-sm font-medium text-gray-900">
-                                                        {{ $teacher->full_name }}
+                                                        {{ $user->full_name }}
                                                     </div>
                                                     <div class="text-sm text-gray-500">
-                                                        {{ $teacher->email }} , {{ $teacher->mobile }}
+                                                        {{ $user->email }} , {{ $user->mobile }}
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ in_array($teacher->status, array_keys(config('constant.status_color')))? 'bg-' .config('constant.status_color')[$teacher->status] .'-100 text-' .config('constant.status_color')[$teacher->status] .'-800': '' }}  ">
-                                                {{ $teacher->status_text }}
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ in_array($user->status, array_keys(config('constant.status_color')))? 'bg-' .config('constant.status_color')[$user->status] .'-100 text-' .config('constant.status_color')[$user->status] .'-800': '' }}  ">
+                                                {{ $user->status_text }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ Str::ucfirst($teacher->roles[0]->name) }}
+                                            {{ Str::ucfirst($user->roles[0]->name) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{ route('teacher.edit', $teacher->id) }}"
+                                            <a href="{{ route('admins.edit', $user->id) }}"
                                                 class="bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-600 rounded">Edit</a>
-                                            <a href="javascript:void(0)"
-                                                Wire:click="teacherDelete({{ $teacher->id }})"
+                                            <a href="javascript:void(0)" Wire:click="adminDelete({{ $user->id }})"
                                                 class="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-600 rounded">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $teachers->links() }}
+                        {{ $users->links() }}
                     </div>
                 </div>
             </div>

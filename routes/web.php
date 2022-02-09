@@ -1,18 +1,18 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Livewire\Admin\CreateAdmin;
-use App\Http\Livewire\Admin\ListAdmin;
-use App\Http\Livewire\Admin\UpdateAdmin;
+use App\Http\Livewire\Admins\CreateAdmin;
+use App\Http\Livewire\Admins\ListAdmin;
+use App\Http\Livewire\Admins\UpdateAdmin;
 use App\Http\Livewire\Classes\CreateClass;
 use App\Http\Livewire\Classes\ListClass;
 use App\Http\Livewire\Classes\UpdateClass;
-use App\Http\Livewire\Student\CreateStudent;
-use App\Http\Livewire\Student\ListStudent;
-use App\Http\Livewire\Student\UpdateStudent;
-use App\Http\Livewire\Teacher\CreateTeacher;
-use App\Http\Livewire\Teacher\ListTeacher;
-use App\Http\Livewire\Teacher\UpdateTeacher;
+use App\Http\Livewire\Students\CreateStudent;
+use App\Http\Livewire\Students\ListStudent;
+use App\Http\Livewire\Students\UpdateStudent;
+use App\Http\Livewire\Teachers\CreateTeacher;
+use App\Http\Livewire\Teachers\ListTeacher;
+use App\Http\Livewire\Teachers\UpdateTeacher;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,16 +34,16 @@ Route::middleware(['auth:web,teacher,student'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::group(['middleware' => ['role:admin']], function () {
-        Route::prefix('/admin')->group(function () {
-            Route::get('/edit/{id}', UpdateAdmin::class)->name('admin.edit');
-            Route::get('/create', CreateAdmin::class)->name('admin.create');
-            Route::get('/', ListAdmin::class, 'render')->name('admin.index');
+        Route::prefix('/admins')->group(function () {
+            Route::get('/edit/{id}', UpdateAdmin::class)->name('admins.edit');
+            Route::get('/create', CreateAdmin::class)->name('admins.create');
+            Route::get('/', ListAdmin::class, 'render')->name('admins.index');
         });
 
-        Route::prefix('/teacher')->group(function () {
-            Route::get('/edit/{id}', UpdateTeacher::class)->name('teacher.edit');
-            Route::get('/create', CreateTeacher::class)->name('teacher.create');
-            Route::get('/', ListTeacher::class, 'render')->name('teacher.index');
+        Route::prefix('/teachers')->group(function () {
+            Route::get('/edit/{id}', UpdateTeacher::class)->name('teachers.edit');
+            Route::get('/create', CreateTeacher::class)->name('teachers.create');
+            Route::get('/', ListTeacher::class, 'render')->name('teachers.index');
         });
 
         Route::prefix('/classes')->group(function () {
@@ -54,10 +54,10 @@ Route::middleware(['auth:web,teacher,student'])->group(function () {
     });
 
     Route::group(['middleware' => ['role:admin|teacher']], function () {
-        Route::prefix('/student')->group(function () {
-            Route::get('/edit/{id}', UpdateStudent::class)->name('student.edit');
-            Route::get('/create', CreateStudent::class)->name('student.create');
-            Route::get('/', ListStudent::class, 'render')->name('student.index');
+        Route::prefix('/students')->group(function () {
+            Route::get('/edit/{id}', UpdateStudent::class)->name('students.edit');
+            Route::get('/create', CreateStudent::class)->name('students.create');
+            Route::get('/', ListStudent::class, 'render')->name('students.index');
         });
     });
 });

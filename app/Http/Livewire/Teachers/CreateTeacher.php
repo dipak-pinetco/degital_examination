@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Teacher;
+namespace App\Http\Livewire\Teachers;
 
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -97,11 +97,11 @@ class CreateTeacher extends Component
 
         session()->flash('class', 'green');
 
-        return redirect()->route('teacher.index');
+        return redirect()->route('teachers.index');
     }
 
     public function render()
     {
-        return view('livewire.teacher.create-teacher', ['genderTypes' => Teacher::getEnum('gender')]);
+        return view('livewire.teachers.create-teacher', ['genderTypes' => Teacher::getEnum('gender')]);
     }
 }

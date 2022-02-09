@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Student;
+namespace App\Http\Livewire\Students;
 
 use App\Models\Student;
 use Livewire\Component;
@@ -26,7 +26,7 @@ class ListStudent extends Component
             ->orderBy('id', 'DESC')->paginate(Student::PAGINATION_COUNT)
             ->withPath('/student')->withQueryString();
 
-        return view('livewire.student.list-student', ['students' => $students]);
+        return view('livewire.students.list-student', ['students' => $students]);
     }
 
     public function studentDelete(Student $student)

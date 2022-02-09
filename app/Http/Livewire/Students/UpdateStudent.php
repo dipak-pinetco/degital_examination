@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Student;
+namespace App\Http\Livewire\Students;
 
 use App\Models\Student;
 use Livewire\Component;
@@ -16,6 +16,6 @@ class UpdateStudent extends Component
 
     public function render()
     {
-        return view('livewire.student.update-student');
+        return view('livewire.students.update-student');
     }
 }

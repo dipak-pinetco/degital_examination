@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admins;
 
 use App\Models\User;
 use Carbon\Carbon;
@@ -86,11 +86,11 @@ class CreateAdmin extends Component
 
         session()->flash('class', 'green');
 
-        return redirect()->route('admin.index');
+        return redirect()->route('admins.index');
     }
 
     public function render()
     {
-        return view('livewire.admin.create-admin', ['genderType' => User::getEnum('gender')]);
+        return view('livewire.admins.create-admin', ['genderType' => User::getEnum('gender')]);
     }
 }

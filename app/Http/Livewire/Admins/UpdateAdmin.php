@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admins;
 
 use App\Models\User;
 use Livewire\Component;
@@ -16,6 +16,6 @@ class UpdateAdmin extends Component
 
     public function render()
     {
-        return view('livewire.admin.update-admin');
+        return view('livewire.admins.update-admin');
     }
 }

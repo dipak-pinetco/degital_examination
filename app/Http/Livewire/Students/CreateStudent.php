@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Student;
+namespace App\Http\Livewire\Students;
 
 use App\Models\Student;
 use Carbon\Carbon;
@@ -89,11 +89,11 @@ class CreateStudent extends Component
 
         session()->flash('class', 'green');
 
-        return redirect()->route('student.index');
+        return redirect()->route('students.index');
     }
 
     public function render()
     {
-        return view('livewire.student.create-student', ['genderTypes' => Student::getEnum('gender')]);
+        return view('livewire.students.create-student', ['genderTypes' => Student::getEnum('gender')]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Teacher;
+namespace App\Http\Livewire\Teachers;
 
 use App\Models\Teacher;
 use Livewire\Component;
@@ -16,6 +16,6 @@ class UpdateTeacher extends Component
 
     public function render()
     {
-        return view('livewire.teacher.update-teacher');
+        return view('livewire.teachers.update-teacher');
     }
 }
