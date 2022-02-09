@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use Arr;
+use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +19,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
+        $roles = Arr::except(array_combine(Config::get('permission.roles'), Config::get('permission.roles')), ['super-admin', 'student']);
+        return view('auth.login', \compact('roles'));
     }
 
     /**

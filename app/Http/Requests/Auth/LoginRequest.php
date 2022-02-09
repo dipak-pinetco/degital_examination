@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests\Auth;
 
+use Config;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
@@ -29,6 +31,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
+            'role' => ['required', Rule::in(Config::get('permission.roles'))],
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
@@ -45,7 +48,13 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::guard('teacher')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if ($this->get('role') == 'teacher' && !Auth::guard('teacher')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => __('auth.failed'),
+            ]);
+        } else if ($this->get('role') == 'admin' && !Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

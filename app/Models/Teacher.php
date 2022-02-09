@@ -20,7 +20,7 @@ class Teacher extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, Enums, SoftDeletes;
 
-    protected $guard = 'teacher';
+    protected $guard_name  = 'teacher';
 
     const PAGINATION_COUNT = 10;
     const GENDER_MALE = 'Male';

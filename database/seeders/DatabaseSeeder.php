@@ -35,17 +35,17 @@ class DatabaseSeeder extends Seeder
         $this->call(SubjectSeeder::class);
 
         School::factory(1)->create()->each(function ($school) use ($roles) {
-            // // AcademicYear
-            // AcademicYear::factory(rand(5, 7))->create([
-            //     'school_id' => $school->id
-            // ]);
+            // AcademicYear
+            AcademicYear::factory(rand(5, 7))->create([
+                'school_id' => $school->id
+            ]);
 
-            // // Admin
-            // User::factory(5)->create([
-            //     'school_id' => $school->id
-            // ])->each(function ($user) use ($roles) {
-                // $user->assignRole($roles[1]);
-            // });
+            // Admin
+            User::factory(5)->create([
+                'school_id' => $school->id
+            ])->each(function ($user) use ($roles) {
+                $user->assignRole($roles[1]);
+            });
 
             // Teacher
             Teacher::factory(10)->create([
@@ -60,26 +60,26 @@ class DatabaseSeeder extends Seeder
 
                 $teacher->assignRole($roles[2]);
 
-                // // Assign Subject
-                // $this->call(SubjectTeacherSeeder::class, false, [
-                //     'teacher_id' => $teacher->id,
-                // ]);
+                // Assign Subject
+                $this->call(SubjectTeacherSeeder::class, false, [
+                    'teacher_id' => $teacher->id,
+                ]);
             });
 
-            // // Class
-            // Clases::factory(rand(5, 10))->create([
-            //     'school_id' => $school->id
-            // ])->each(function ($class) {
-            //     // Class Division
-            //     $this->call(ClassDivisionSeeder::class, false, [
-            //         'clases_id' => $class->id,
-            //     ]);
+            // Class
+            Clases::factory(rand(5, 10))->create([
+                'school_id' => $school->id
+            ])->each(function ($class) {
+                // Class Division
+                $this->call(ClassDivisionSeeder::class, false, [
+                    'clases_id' => $class->id,
+                ]);
 
-            //     // Class Subject
-            //     $this->call(ClassSubjectSeeder::class, false, [
-            //         'clases_id' => $class->id,
-            //     ]);
-            // });
+                // Class Subject
+                $this->call(ClassSubjectSeeder::class, false, [
+                    'clases_id' => $class->id,
+                ]);
+            });
 
             // ExaminationGroup
             // ExaminationGroup::factory(4)->create([

@@ -71,10 +71,9 @@ return [
             'driver' => 'eloquent',
             'model' => User::class,
         ],
-
         'teachers' => [
             'driver' => 'eloquent',
-            'table' => Teacher::class,
+            'model' => Teacher::class,
         ],
     ],
 
