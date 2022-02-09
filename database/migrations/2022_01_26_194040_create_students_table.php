@@ -27,7 +27,7 @@ class CreateStudentsTable extends Migration
             $table->string('mobile', 20)->nullable();
             $table->string('avatar', 100)->nullable();
             $table->enum('status', [1, 0, 2])->comment("1 = Active, 0 = Block, 2 = Draft");
-            $table->string('gr_number', 25);
+            $table->string('gr_number', 25)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

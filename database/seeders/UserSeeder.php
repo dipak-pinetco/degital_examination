@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Student;
+use App\Models\User;
 use Config;
 use Illuminate\Database\Seeder;
 
-class StudentSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,10 @@ class StudentSeeder extends Seeder
      */
     public function run($school_id)
     {
-        Student::factory(100)->create([
+        User::factory(5)->create([
             'school_id' => $school_id
         ])->each(function ($user) {
-            $user->assignRole(Config::get('permission.roles')[3]);
+            $user->assignRole(Config::get('permission.roles')[1]);
         });
     }
 }
