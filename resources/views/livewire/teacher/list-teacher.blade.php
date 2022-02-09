@@ -62,12 +62,12 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ in_array($teacher->user->status, array_keys(config('constant.status_color')))? 'bg-' .config('constant.status_color')[$teacher->user->status] .'-100 text-' .config('constant.status_color')[$teacher->user->status] .'-800': '' }}  ">
-                                                {{ $teacher->user->status_text }}
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ in_array($teacher->status, array_keys(config('constant.status_color')))? 'bg-' .config('constant.status_color')[$teacher->status] .'-100 text-' .config('constant.status_color')[$teacher->status] .'-800': '' }}  ">
+                                                {{ $teacher->status_text }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ Str::ucfirst($teacher->user->roles[0]->name) }}
+                                            {{ Str::ucfirst($teacher->roles[0]->name) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <a href="{{ route('teacher.edit', $teacher->id) }}"

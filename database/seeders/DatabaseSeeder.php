@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(SubjectSeeder::class);
 
-        School::factory(1)->create()->each(function ($school) use ($roles) {
+        School::factory(rand(5, 7))->create()->each(function ($school) use ($roles) {
             // AcademicYear
             AcademicYear::factory(rand(5, 7))->create([
                 'school_id' => $school->id
@@ -51,13 +51,6 @@ class DatabaseSeeder extends Seeder
             Teacher::factory(10)->create([
                 'school_id' => $school->id
             ])->each(function ($teacher) use ($roles) {
-                // $teacher->password = Hash::make('password');
-                // $teacher->email_verified_at = now();
-                // $teacher->remember_token = Str::random(10);
-
-                // $teacherUser = clone $teacher->user();
-                // $teacherUser->create(Arr::except($teacher->toArray(), ['id', 'degree']))->save();
-
                 $teacher->assignRole($roles[2]);
 
                 // Assign Subject

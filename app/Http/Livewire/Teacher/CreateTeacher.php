@@ -53,7 +53,7 @@ class CreateTeacher extends Component
             $validation['password'] = 'required';
             $validation['email'] = ['required', 'email', Rule::unique('users')];
         } else {
-            $validation['email'] = ['required', 'email', Rule::unique('users')->ignore($this->teacher->user->id)];
+            $validation['email'] = ['required', 'email', Rule::unique('users')->ignore($this->teacher->id)];
         }
         return $validation;
     }
@@ -77,16 +77,11 @@ class CreateTeacher extends Component
         if (is_null($this->teacher)) {
             $validatedData['status'] = $this->status;
             $validatedData['school_id'] = auth()->user()->school_id;
+            $validatedData['password'] = Hash::make($validatedData['password']);
+            $validatedData['email_verified_at'] = now();
+            $validatedData['remember_token'] = Str::random(10);
             $this->teacher = Teacher::create($validatedData);
-
-            $this->teacher->password = Hash::make($validatedData['password']);
-            $this->teacher->email_verified_at = now();
-            $this->teacher->remember_token = Str::random(10);
-
-            $teacherUser = clone $this->teacher->user();
-            $teacherUser->create(Arr::except($this->teacher->toArray(), ['id']))->save();
-
-            $this->teacher->user->assignRole(Config::get('permission.roles')[2]);
+            $this->teacher->assignRole(Config::get('permission.roles')[2]);
 
             session()->flash('message', __('Teacher successfully created.'));
         } else {
