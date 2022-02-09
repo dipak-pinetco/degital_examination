@@ -11,14 +11,14 @@ class ExaminationPaperQuestion extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * Get the examination_paper that owns the ExaminationPaperQuestion
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function examination_paper(): BelongsTo
-    {
-        return $this->belongsTo(ExaminationPaper::class);
-    }
+    // /**
+    //  * Get the examination_paper that owns the ExaminationPaperQuestion
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    //  */
+    // public function examination_paper(): BelongsTo
+    // {
+    //     return $this->belongsTo(ExaminationPaper::class);
+    // }
 
 }

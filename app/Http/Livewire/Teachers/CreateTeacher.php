@@ -4,13 +4,13 @@ namespace App\Http\Livewire\Teachers;
 
 use App\Models\Subject;
 use App\Models\Teacher;
-use Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Password;
 use Str;
 
 class CreateTeacher extends Component
@@ -30,7 +30,6 @@ class CreateTeacher extends Component
             $this->gender = $teacher->gender;
             $this->date_of_birth = $teacher->date_of_birth->format('Y-m-d');
             $this->email = $teacher->email;
-            // $this->password = $teacher->password;
             $this->mobile = $teacher->mobile;
             $this->degree = $teacher->degree;
             $this->subjects = $teacher->subjects->pluck('id');
@@ -39,18 +38,17 @@ class CreateTeacher extends Component
     protected function rules()
     {
         $validation = [
-            'first_name' => 'required|min:3|max:25',
-            'last_name' => 'required|min:3|max:25',
-            'gender' => 'required|in:' . implode(',', Teacher::getEnum('gender')),
-            // 'gender' => ['required', new Enum(ServerStatus::class)],
+            'first_name' => ['required', 'min:3', 'max:25'],
+            'last_name' => ['required', 'min:3', 'max:25'],
+            'gender' => ['required', Rule::in(Teacher::getEnum('gender'))],
             'date_of_birth' => ['required', 'date', 'before:' . Carbon::now()->subYears(5)],
-            'mobile' => 'required',
-            'degree' => 'required',
-            'subjects' => 'required|array|min:1',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 2MB Max
+            'mobile' => ['required'],
+            'degree' => ['required'],
+            'subjects' => ['required', 'array', 'min:1'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // 2MB Max
         ];
         if (is_null($this->teacher)) {
-            $validation['password'] = 'required';
+            $validation['password'] = ['required', Password::defaults()];
             $validation['email'] = ['required', 'email', Rule::unique('teachers')];
         } else {
             $validation['email'] = ['required', 'email', Rule::unique('teachers')->ignore($this->teacher->id)];
@@ -80,6 +78,7 @@ class CreateTeacher extends Component
             $validatedData['password'] = Hash::make($validatedData['password']);
             $validatedData['email_verified_at'] = now();
             $validatedData['remember_token'] = Str::random(10);
+
             $this->teacher = Teacher::create($validatedData);
             $this->teacher->assignRole(Config::get('permission.roles')[2]);
 

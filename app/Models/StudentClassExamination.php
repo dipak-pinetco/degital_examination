@@ -12,11 +12,11 @@ class StudentClassExamination extends Model
     use HasFactory, SoftDeletes;
 
     /**
-     * Get the student_class that owns the StudentClassExamination
+     * Get the studentClass that owns the StudentClassExamination
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function student_class(): BelongsTo
+    public function studentClass(): BelongsTo
     {
         return $this->belongsTo(StudentClass::class);
     }

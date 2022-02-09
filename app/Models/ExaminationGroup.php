@@ -11,13 +11,13 @@ class ExaminationGroup extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * Get the school that owns the ExaminationGroup
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function school(): BelongsTo
-    {
-        return $this->belongsTo(School::class);
-    }
+    // /**
+    //  * Get the school that owns the ExaminationGroup
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    //  */
+    // public function school(): BelongsTo
+    // {
+    //     return $this->belongsTo(School::class);
+    // }
 }

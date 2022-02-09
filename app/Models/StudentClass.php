@@ -22,11 +22,11 @@ class StudentClass extends Model
     }
 
     /**
-     * Get the class_division that owns the StudentClass
+     * Get the classDivision that owns the StudentClass
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function class_division(): BelongsTo
+    public function classDivision(): BelongsTo
     {
         return $this->belongsTo(ClassDivision::class);
     }

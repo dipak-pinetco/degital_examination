@@ -20,4 +20,5 @@ class AcademicYear extends Model
     {
         return $this->belongsTo(School::class);
     }
+
 }

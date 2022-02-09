@@ -12,31 +12,31 @@ class School extends Model
     use HasFactory, SoftDeletes;
 
     /**
-     * Get all of the comments for the School
+     * Get all of the academicYears for the School
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function academic_year(): HasMany
+    public function academicYears(): HasMany
     {
         return $this->hasMany(AcademicYear::class);
     }
 
     /**
-     * Get the examination_group that owns the School
+     * Get the examinationGroups that owns the School
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function examination_group(): HasMany
+    public function examinationGroups(): HasMany
     {
         return $this->hasMany(ExaminationGroup::class);
     }
 
     /**
-     * Get all of the class for the School
+     * Get all of the clases for the School
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function class(): HasMany
+    public function clases(): HasMany
     {
         return $this->hasMany(Clases::class);
     }

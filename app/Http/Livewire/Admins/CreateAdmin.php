@@ -6,11 +6,11 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Password;
+use Str;
 
 class CreateAdmin extends Component
 {
@@ -35,16 +35,16 @@ class CreateAdmin extends Component
     protected function rules()
     {
         $validation = [
-            'first_name' => 'required|min:3|max:25',
-            'last_name' => 'required|min:3|max:25',
-            'gender' => 'required|in:' . implode(',', User::getEnum('gender')),
+            'first_name' => ['required', 'min:3', 'max:25'],
+            'last_name' => ['required', 'min:3', 'max:25'],
+            'gender' => ['required', Rule::in(User::getEnum('gender'))],
             // 'gender' => ['required', new Enum(ServerStatus::class)],
             'date_of_birth' => ['required', 'date', 'before:' . Carbon::now()->subYears(5)],
-            'mobile' => 'required',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 2MB Max
+            'mobile' => ['required'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // 2MB Max
         ];
         if (is_null($this->admin)) {
-            $validation['password'] = 'required';
+            $validation['password'] = ['required', Password::defaults()];
             $validation['email'] = ['required', 'email', Rule::unique('users')];
         } else {
             $validation['email'] = ['required', 'email', Rule::unique('users')->ignore($this->admin->id)];
@@ -69,12 +69,15 @@ class CreateAdmin extends Component
         }
 
         if (is_null($this->admin)) {
-            $validatedData['password'] = Hash::make($validatedData['password']);
             $validatedData['status'] = $this->status;
             $validatedData['school_id'] = auth()->user()->school_id;
+            $validatedData['password'] = Hash::make($validatedData['password']);
+            $validatedData['email_verified_at'] = now();
+            $validatedData['remember_token'] = Str::random(10);
+
             $user = User::create($validatedData);
-            $roles = Config::get('permission.roles');
-            $user->assignRole($roles[1]);
+            $user->assignRole(Config::get('permission.roles')[1]);
+
             session()->flash('message', __('Admin successfully created.'));
         } else {
             if (is_null($validatedData['avatar'])) {
@@ -85,7 +88,6 @@ class CreateAdmin extends Component
         }
 
         session()->flash('class', 'green');
-
         return redirect()->route('admins.index');
     }
 

@@ -11,23 +11,23 @@ class ClassTeacherSubject extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * Get the class_subject that owns the ClassTeacherSubject
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function class_subject(): BelongsTo
-    {
-        return $this->belongsTo(ClassSubject::class);
-    }
+    // /**
+    //  * Get the class_subject that owns the ClassTeacherSubject
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    //  */
+    // public function class_subject(): BelongsTo
+    // {
+    //     return $this->belongsTo(ClassSubject::class);
+    // }
 
-    /**
-     * Get the teacher_subject that owns the ClassTeacherSubject
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function teacher_subject(): BelongsTo
-    {
-        return $this->belongsTo(TeacherSubject::class);
-    }
+    // /**
+    //  * Get the teacher_subject that owns the ClassTeacherSubject
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    //  */
+    // public function teacher_subject(): BelongsTo
+    // {
+    //     return $this->belongsTo(TeacherSubject::class);
+    // }
 }

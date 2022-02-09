@@ -9,6 +9,7 @@ use Hash;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Password;
 use Str;
 
 class CreateStudent extends Component
@@ -27,7 +28,6 @@ class CreateStudent extends Component
             $this->gender = $student->gender;
             $this->date_of_birth = $student->date_of_birth->format('Y-m-d');
             $this->email = $student->email;
-            // $this->password = $student->password;
             $this->mobile = $student->mobile;
             $this->gr_number = $student->gr_number;
         }
@@ -35,17 +35,16 @@ class CreateStudent extends Component
     protected function rules()
     {
         $validation = [
-            'first_name' => 'required|min:3|max:25',
-            'last_name' => 'required|min:3|max:25',
-            'gender' => 'required|in:' . implode(',', Student::getEnum('gender')),
-            // 'gender' => ['required', new Enum(ServerStatus::class)],
+            'first_name' => ['required', 'min:3', 'max:25'],
+            'last_name' => ['required', 'min:3', 'max:25'],
+            'gender' => ['required', Rule::in(Student::getEnum('gender'))],
             'date_of_birth' => ['required', 'date', 'before:' . Carbon::now()->subYears(5)],
-            'mobile' => 'required',
-            'gr_number' => 'required',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 2MB Max
+            'mobile' => ['required'],
+            'gr_number' => ['required'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // 2MB Max
         ];
         if (is_null($this->student)) {
-            $validation['password'] = 'required';
+            $validation['password'] = ['required', Password::defaults()];
             $validation['email'] = ['required', 'email', Rule::unique('students')];
         } else {
             $validation['email'] = ['required', 'email', Rule::unique('students')->ignore($this->student->id)];
@@ -75,9 +74,10 @@ class CreateStudent extends Component
             $validatedData['password'] = Hash::make($validatedData['password']);
             $validatedData['email_verified_at'] = now();
             $validatedData['remember_token'] = Str::random(10);
+
             $this->student = Student::create($validatedData);
             $this->student->assignRole(Config::get('permission.roles')[3]);
-
+            
             session()->flash('message', __('Student successfully created.'));
         } else {
             if (is_null($validatedData['avatar'])) {

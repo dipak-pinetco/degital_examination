@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +18,7 @@ class ClassDivision extends Model
 
     const PAGINATION_COUNT = 10;
 
-    public static function class_divisions_array()
+    public static function class_divisions_array(): array
     {
         return range(ClassDivision::CLASS_DIVISIONS_START, ClassDivision::CLASS_DIVISIONS_END);
     }
@@ -46,6 +47,6 @@ class ClassDivision extends Model
      */
     public function class(): BelongsTo
     {
-        return $this->belongsTo(Clases::class,'clases_id');
+        return $this->belongsTo(Clases::class, 'clases_id');
     }
 }
