@@ -16,7 +16,7 @@ class SubjectSeeder extends Seeder
     public function run()
     {
         $subjects = [
-            'Gujrati', 'Hindi', 'English', 'Math', 'Coumputer', 'PHP', 'Android', 'Ios',
+            'Gujrati', 'Hindi', 'English', 'Math', 'Coumputer', 'PHP', 'Android', 'iOS',
             'Wordpress', 'Flutter', 'Css', 'Html', 'Javascript', 'Jquery', 'C', 'C++'
         ];
 

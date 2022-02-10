@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -52,5 +53,10 @@ class AppServiceProvider extends ServiceProvider
 
             return $this;
         });
+
+        Carbon::macro('humanReadable', function (string $formate = 'M d Y') {
+            return $this->format($formate);
+        });
+
     }
 }

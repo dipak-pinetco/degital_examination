@@ -86,4 +86,9 @@ class Clases extends Model
     {
         return $this->belongsToMany(Subject::class);
     }
+
+    public function examinations()
+    {
+        return $this->morphMany(Examination::class, 'examinationable');
+    }
 }

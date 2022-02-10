@@ -20,24 +20,23 @@ class SchoolSeeder extends Seeder
      */
     public function run()
     {
-        School::factory(rand(5, 7))->create()->each(function ($school) {
-            // AcademicYear
-            $this->call(AcademicYearSeeder::class, false, ['school_id' => $school->id]);
+        School::factory(2)
+            ->has(AcademicYear::factory(rand(5, 7)))
+            ->create()->each(function ($school) {
+                // ExaminationGroup
+                $this->call(ExaminationGroupSeeder::class, false, ['school_id' => $school->id]);
 
-            // Admin
-            $this->call(UserSeeder::class, false, ['school_id' => $school->id]);
+                // Admin
+                $this->call(UserSeeder::class, false, ['school_id' => $school->id]);
 
-            // Teacher
-            $this->call(TeacherSeeder::class, false, ['school_id' => $school->id]);
+                // Class
+                $this->call(ClasesSeeder::class, false, ['school_id' => $school->id]);
 
-            // Class
-            $this->call(ClasesSeeder::class, false, ['school_id' => $school->id]);
+                // Teacher
+                $this->call(TeacherSeeder::class, false, ['school_id' => $school->id]);
 
-            // Student
-            $this->call(StudentSeeder::class, false, ['school_id' => $school->id]);
-
-            // ExaminationGroup
-            $this->call(ExaminationGroupSeeder::class, false, ['school_id' => $school->id]);
-        });
+                // Student
+                $this->call(StudentSeeder::class, false, ['school_id' => $school->id]);
+            });
     }
 }

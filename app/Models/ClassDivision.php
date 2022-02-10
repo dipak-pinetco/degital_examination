@@ -49,4 +49,9 @@ class ClassDivision extends Model
     {
         return $this->belongsTo(Clases::class, 'clases_id');
     }
+
+    public function examinations()
+    {
+        return $this->morphMany(Examination::class, 'examinationable');
+    }
 }

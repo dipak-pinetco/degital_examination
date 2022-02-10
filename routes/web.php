@@ -7,6 +7,9 @@ use App\Http\Livewire\Admins\UpdateAdmin;
 use App\Http\Livewire\Classes\CreateClass;
 use App\Http\Livewire\Classes\ListClass;
 use App\Http\Livewire\Classes\UpdateClass;
+use App\Http\Livewire\Examinations\CreateExamination;
+use App\Http\Livewire\Examinations\ListExamination;
+use App\Http\Livewire\Examinations\UpdateExamination;
 use App\Http\Livewire\Students\CreateStudent;
 use App\Http\Livewire\Students\ListStudent;
 use App\Http\Livewire\Students\UpdateStudent;
@@ -51,6 +54,11 @@ Route::middleware(['auth:web,teacher,student'])->group(function () {
             Route::get('/create', CreateClass::class)->name('classes.create');
             Route::get('/', ListClass::class, 'render')->name('classes.index');
         });
+
+        Route::prefix('/examinations')->group(function () {
+            Route::get('/edit/{id}', UpdateExamination::class)->name('examinations.edit');
+            Route::get('/create', CreateExamination::class)->name('examinations.create');
+        });
     });
 
     Route::group(['middleware' => ['role:admin|teacher']], function () {
@@ -59,6 +67,8 @@ Route::middleware(['auth:web,teacher,student'])->group(function () {
             Route::get('/create', CreateStudent::class)->name('students.create');
             Route::get('/', ListStudent::class, 'render')->name('students.index');
         });
+
+        Route::get('examinations/', ListExamination::class, 'render')->name('examinations.index');
     });
 });
 

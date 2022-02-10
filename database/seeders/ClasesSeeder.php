@@ -16,15 +16,22 @@ class ClasesSeeder extends Seeder
     {
         Clases::factory(rand(5, 10))->create([
             'school_id' => $school_id
-        ])->each(function ($class) {
+        ])->each(function ($class) use ($school_id) {
             // Class Division
-            $this->call(ClassDivisionSeeder::class, false, [
+            $this->callWith(ClassDivisionSeeder::class,  [
                 'clases_id' => $class->id,
             ]);
 
             // Class Subject
-            $this->call(ClassSubjectSeeder::class, false, [
+            $this->callWith(ClassSubjectSeeder::class,  [
                 'clases_id' => $class->id,
+            ]);
+
+            // Examination
+            $this->callWith(ExaminationSeeder::class,  [
+                'examinationable_id' => $class->id,
+                'examinationable_type' => 'App\Models\Clases',
+                'school_id' => $school_id,
             ]);
         });
     }

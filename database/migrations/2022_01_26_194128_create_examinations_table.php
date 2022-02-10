@@ -17,7 +17,7 @@ class CreateExaminationsTable extends Migration
             $table->id('id');
             $table->foreignId('examination_group_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('academic_year_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('supervision_teacher_id')->constrained('teachers')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('supervision_teacher_id')->nullable()->constrained('teachers')->cascadeOnDelete()->cascadeOnUpdate();
             $table->morphs('examinationable');
             $table->string('name', 100)->nullable();
             $table->datetime('start_datetime')->nullable();

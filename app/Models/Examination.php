@@ -5,45 +5,56 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Examination extends Model
 {
     use HasFactory, SoftDeletes;
 
-    // /**
-    //  * Get the examination_group that owns the Examination
-    //  *
-    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    //  */
-    // public function examination_group(): BelongsTo
-    // {
-    //     return $this->belongsTo(ExaminationGroup::class);
-    // }
+    const PAGINATION_COUNT = 10;
 
-    // /**
-    //  * Get the academic_year that owns the Examination
-    //  *
-    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    //  */
-    // public function academic_year(): BelongsTo
-    // {
-    //     return $this->belongsTo(AcademicYear::class);
-    // }
+    protected $dates = [
+        'start_datetime',
+    ];
 
+    /**
+     * Get the examinationGroup that owns the Examination
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function examinationGroup(): BelongsTo
+    {
+        return $this->belongsTo(ExaminationGroup::class);
+    }
 
-    // public function examination()
-    // {
-    //     return $this->morphTo();
-    // }
+    /**
+     * Get the academicYear that owns the Examination
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function academicYear(): BelongsTo
+    {
+        return $this->belongsTo(AcademicYear::class);
+    }
 
-    // /**
-    //  * Get the supervision_teacher that owns the Examination
-    //  *
-    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    //  */
-    // public function supervision_teacher(): BelongsTo
-    // {
-    //     return $this->belongsTo(Teacher::class, 'id', 'supervision_teacher_id');
-    // }
+    /**
+     * Get the supervisionTeacher that owns the Examination
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function supervisionTeacher(): BelongsTo
+    {
+        return $this->belongsTo(Teacher::class, 'supervision_teacher_id', 'id');
+    }
+
+    public function examinationable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    function getTotalTimeAttribute($value)
+    {
+        return gmdate("H:i", $value * 60);
+    }
 }
