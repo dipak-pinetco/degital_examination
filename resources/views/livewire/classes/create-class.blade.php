@@ -41,7 +41,7 @@
                                             {{ Str::ucfirst($subject->name) }}</option>
                                     @endforeach
                                 </select>
-                                @error('subjects') <span class="error">{{ $message }}</span> @enderror
+                                @error('subjects') <span class="error text-red-700">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Enums\GenderTypes;
 
 class Examination extends Model
 {
@@ -14,8 +15,33 @@ class Examination extends Model
 
     const PAGINATION_COUNT = 10;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'examination_group_id',
+        'academic_year_id',
+        'supervision_teacher_id',
+        'name',
+        'start_date_time',
+        'total_time',
+        'total_marks',
+        'passout_marks',
+    ];
+
     protected $dates = [
-        'start_datetime',
+        'start_date_time',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'start_date_time' => 'datetime',
     ];
 
     /**
@@ -53,8 +79,8 @@ class Examination extends Model
         return $this->morphTo();
     }
 
-    function getTotalTimeAttribute($value)
+    function getTotalTimeConvertAttribute()
     {
-        return gmdate("H:i", $value * 60);
+        return gmdate("H:i", $this->total_time * 60);
     }
 }

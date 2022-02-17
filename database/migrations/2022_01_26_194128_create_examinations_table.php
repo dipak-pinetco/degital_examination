@@ -20,7 +20,7 @@ class CreateExaminationsTable extends Migration
             $table->foreignId('supervision_teacher_id')->nullable()->constrained('teachers')->cascadeOnDelete()->cascadeOnUpdate();
             $table->morphs('examinationable');
             $table->string('name', 100)->nullable();
-            $table->datetime('start_datetime')->nullable();
+            $table->datetime('start_date_time')->nullable();
             $table->integer('total_time');
             $table->integer('total_marks');
             $table->integer('passout_marks');

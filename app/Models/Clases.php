@@ -91,4 +91,9 @@ class Clases extends Model
     {
         return $this->morphMany(Examination::class, 'examinationable');
     }
+
+    public function scopeAuthSchool($query)
+    {
+        return $query->where('school_id', auth()->user()->school_id);
+    }
 }

@@ -23,7 +23,7 @@ trait AuthModelHelper
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
-    public function scoperoleUser($query, array $roles)
+    public function scopeRoleUser($query, array $roles)
     {
         $query->with(['roles'])
             ->when(!auth()->user()->hasRole('superAdmin'), function ($query) {

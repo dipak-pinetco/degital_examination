@@ -72,10 +72,10 @@
                                             {{ Str::ucfirst($examination->name) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $examination->start_datetime->humanReadable() }}
+                                            {{ $examination->start_date_time->humanReadable() }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $examination->total_time }}
+                                            {{ $examination->total_time_convert }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $examination->total_marks }}

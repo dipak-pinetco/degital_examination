@@ -21,4 +21,8 @@ class AcademicYear extends Model
         return $this->belongsTo(School::class);
     }
 
+    public function scopeSchoolCurrentYear($query)
+    {
+        $query->where('school_id', auth()->user()->school_id)->orderByDesc('id')->take(1);
+    }
 }

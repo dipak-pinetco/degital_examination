@@ -21,7 +21,6 @@ class ListExamination extends Component
 
     public function render()
     {
-
         $examinations = Examination::with([
             'academicYear',
             'examinationGroup',
@@ -51,7 +50,14 @@ class ListExamination extends Component
                 }
             )
             ->when(!empty($this->search), function ($query) {
-                $query->whereLike(['name'], $this->search);
+                $query->whereLike([
+                    'name',
+                    'academicYear.academic_year',
+                    'examinationGroup.name',
+                    'supervisionTeacher.first_name',
+                    'supervisionTeacher.last_name',
+                    'examinationable.name'
+                ], $this->search);
             })
             ->orderBy('id', 'DESC')->paginate(Examination::PAGINATION_COUNT)
             ->withPath('/examination')->withQueryString();

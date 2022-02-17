@@ -38,7 +38,7 @@
                                 <input wire:model='last_name' type="text" name="last-name" id="last-name"
                                     autocomplete="family-name"
                                     class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
-                                @error('last_name') <span class="error">{{ $message }}</span> @enderror
+                                @error('last_name') <span class="error text-red-700">{{ $message }}</span> @enderror
                             </div>
                         </div>
 
@@ -50,7 +50,7 @@
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 <input wire:model='email' id="email" name="email" type="email" autocomplete="email"
                                     class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
-                                @error('email') <span class="error">{{ $message }}</span> @enderror
+                                @error('email') <span class="error text-red-700">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div
@@ -61,7 +61,7 @@
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 <input wire:model='mobile' id="mobile" name="mobile" type="tel" autocomplete="mobile"
                                     class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
-                                @error('mobile') <span class="error">{{ $message }}</span> @enderror
+                                @error('mobile') <span class="error text-red-700">{{ $message }}</span> @enderror
                             </div>
                         </div>
 
@@ -79,7 +79,7 @@
                                             {{ Str::ucfirst($gender1) }}</option>
                                     @endforeach
                                 </select>
-                                @error('gender') <span class="error">{{ $message }}</span> @enderror
+                                @error('gender') <span class="error text-red-700">{{ $message }}</span> @enderror
                             </div>
                         </div>
 
@@ -92,7 +92,7 @@
                                 <input wire:model='date_of_birth' type="date" name="date-of-birth" id="date-of-birth"
                                     autocomplete="date-of-birth"
                                     class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md">
-                                @error('date_of_birth') <span class="error">{{ $message }}</span>
+                                @error('date_of_birth') <span class="error text-red-700">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                                     <input wire:model='password' type="password" name="password" id="password"
                                         autocomplete="address-level2"
                                         class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                                    @error('password') <span class="error">{{ $message }}</span>
+                                    @error('password') <span class="error text-red-700">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                @error('avatar') <span class="error">{{ $message }}</span> @enderror
+                                @error('avatar') <span class="error text-red-700">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>

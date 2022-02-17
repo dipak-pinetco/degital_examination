@@ -7,6 +7,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use InvalidArgumentException;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -58,5 +60,20 @@ class AppServiceProvider extends ServiceProvider
             return $this->format($formate);
         });
 
+        Validator::extend('existsWithOther', function ($attribute, $value, $parameters, $validator) {
+            if (count($parameters) < 4) {
+                throw new InvalidArgumentException("Validation rule game_fixture requires 4 parameters.");
+            }
+
+            $input = $validator->getData();
+            $verifier = $validator->getPresenceVerifier();
+            $collection = $parameters[0];
+            $column = $parameters[1];
+            $extra = [$parameters[2] => $parameters[3]];
+
+            $count = $verifier->getMultiCount($collection, $column, (array) $value, $extra);
+
+            return $count >= 1;
+        });
     }
 }
