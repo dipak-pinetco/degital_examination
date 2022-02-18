@@ -14,8 +14,6 @@ yarn-error.log
 /.idea
 /.vscode
 storage/debugbar/*
-composer.lock
-package-lock.json
 public/css/app.css
 public/js/app.js
 storage/app/public/*
