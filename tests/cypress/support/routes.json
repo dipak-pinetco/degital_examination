@@ -236,6 +236,16 @@
       "HEAD"
     ]
   },
+  "index": {
+    "name": "index",
+    "domain": null,
+    "action": "Closure",
+    "uri": "/",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
   "dashboard": {
     "name": "dashboard",
     "domain": null,

@@ -10,7 +10,7 @@
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
         <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        {{-- <x-auth-validation-errors class="mb-4" :errors="$errors" /> --}}
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -19,7 +19,7 @@
             <div>
                 <x-label for="roles" :value="__('Roles')" />
 
-                <x-form-select required id="roles" :value="old('role')" name="role" :options="$roles"
+                <x-form-select id="roles" :value="old('role')" name="role" :options="$roles"
                     placeholder="Select roles" />
             </div>
 
@@ -27,16 +27,19 @@
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                     autofocus />
+                <x-filed-error :name="'email'"></x-filed-error>
+
             </div>
 
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />
 
-                <x-input value='password' id="password" class="block mt-1 w-full" type="password" name="password"
-                    required autocomplete="current-password" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password"
+                    autocomplete="current-password" />
+                <x-filed-error :name="'password'"></x-filed-error>
             </div>
 
             <!-- Remember Me -->
