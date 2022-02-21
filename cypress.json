@@ -1,4 +1,5 @@
 {
+    "projectId": "rbn9m8",
     "baseUrl": "http://degital-examination.test",
     "chromeWebSecurity": false,
     "retries": 0,
